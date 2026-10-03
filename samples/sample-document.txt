@@ -1,0 +1,19 @@
+SYNTHETIC WORKSHOP SAMPLE — NOT A UNIVERSITY RECORD
+
+Title: Media publishing practice handout
+Language: English
+Purpose: Practice private R2 upload and short-lived download access.
+
+Images: deliver image variants for cards and detail views.
+Stream: encode video, verify readiness, and publish English captions.
+R2: store objects and grant time-limited access to a specific request.
+
+Verification questions:
+1. Is the assigned bucket private?
+2. Does the signed GET request succeed before expiry?
+3. Is a fresh request denied after expiry?
+4. Does the downloaded multipart fixture match the source SHA-256?
+
+This file contains no personal data, credentials, real account values,
+contractual quota claims, or procurement acceptance evidence.
+Delete only the objects created by your pair when the exercise ends.
