@@ -1,67 +1,98 @@
-# Lab 1 — one original, two intentional views
+# Lab 1 — one original, two intentional views (35 minutes)
 
-Read [Images theory](00-theory.md#images-transformations-are-a-publishing-contract) and complete [setup](setup.md). Hosted Images Paid and account-wide variant-write permission are required.
+Read [Images theory](00-theory.md#images-transformations-are-a-publishing-contract) and complete [setup](setup.md). **Primary route: Cloudflare Dashboard.**
 
-## 1. Predict the crop
+## 1. Predict and upload (0–10 min)
 
-Open `samples/sample-image.jpg`: 1600×1200 (4:3). Predict what a 320×180 (16:9) cover will remove and how a 1280×720 scale-down bounding box will behave.
+1. Open `samples/sample-image.jpg`: 1600×1200, aspect ratio 4:3. Predict which edges a 16:9 cover crop removes.
+2. In the account dashboard find **Images → Hosted Images** using product search. Open the hosted image library and use the upload/Quick Upload control to select the JPEG.
+3. Open the uploaded record and record the actual image ID. The initial synthetic sample is public. Keep the original locally.
 
-## 2. Create your own named variants
+## 2. Create owned variants (10–17 min)
 
-```sh
-npm run images -- setup
+1. On **Hosted Images → Delivery**, select **Create variant**.
+2. Create `<pair-prefix>-thumb`: width **320**, height **180**, fit **Cover**, **Strip all metadata**.
+3. Create `<pair-prefix>-detail`: width **1280**, height **720**, fit **Scale down**, **Strip all metadata**.
+4. Leave **Always allow public access** disabled, especially for the optional private test. These settings are account-wide; if the name exists, choose a new one. An authorized operator handles creation if your role lacks permission.
+
+## 3. Inspect actual delivery (17–27 min)
+
+Open the owned image's delivery link for each variant. Use the actual delivery hash and image ID:
+
+```text
+https://imagedelivery.net/<delivery-hash>/<image-id>/<variant-name>
 ```
 
-Creates only `<random-run-prefix>-thumb` (320×180 Cover) and `-detail` (1280×720 Scale down), with metadata stripped and `neverRequireSignedURLs=false`. Names/settings are recorded in `.lab/state.json`. Existing unrelated variants are neither reused nor edited.
+The hash is **not** the account ID. Measure intrinsic dimensions using browser image information or DevTools: select the delivered image element and inspect `naturalWidth`/`naturalHeight`. Expected **thumb 320×180**, **detail 960×720**. Compare edge markers and verify both URLs use the same source image ID. CSS display dimensions are not the delivered image dimensions.
 
-In **Hosted Images → Delivery**, inspect these two actual variant definitions. They are account-wide, so use the script's printed names rather than editing `public`.
+## 4. Explain and clean up (27–35 min)
 
-## 3. Upload the JPEG
+Record fit, output dimensions and one crop observation. Delete only your uploaded image from the library. In **Delivery**, remove only your two newly created variants after they are no longer needed. Never remove shared/pre-existing definitions.
 
-```sh
-npm run images -- upload
-```
+If time permits, perform the optional private demonstration below before cleanup. Otherwise mark access checks unperformed; the core crop/dimension result is still real.
 
-This sends a real multipart form POST to `/accounts/<account>/images/v1`. It records the returned image ID and builds variant links using the actual **delivery hash** returned by Images. The initial sample image is public; it contains only synthetic workshop media.
+## Direct API alternative
 
-## 4. Measure actual output
+Use [setup's terminal variables](setup.md#3-prepare-direct-rest-calls). Create variants once, inspect each successful response and record names. Do not repeat these POSTs if the GUI already created them.
 
 ```sh
-npm run images -- verify
+curl --fail-with-body --silent --show-error "$CF_BASE/images/v1/variants" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data "{\"id\":\"$PAIR_PREFIX-thumb\",\"options\":{\"width\":320,\"height\":180,\"fit\":\"cover\",\"metadata\":\"none\"},\"neverRequireSignedURLs\":false}"
+
+curl --fail-with-body --silent --show-error "$CF_BASE/images/v1/variants" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data "{\"id\":\"$PAIR_PREFIX-detail\",\"options\":{\"width\":1280,\"height\":720,\"fit\":\"scale-down\",\"metadata\":\"none\"},\"neverRequireSignedURLs\":false}"
+
+curl --fail-with-body --silent --show-error "$CF_BASE/images/v1" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --form 'file=@samples/sample-image.jpg'
 ```
 
-The command fetches and decodes real delivered images with Sharp. Expected: **thumb 320×180; detail 960×720**. Open the printed URLs and inspect crop markers. Both delivery URLs reference the same image ID. A browser CSS box is not the intrinsic image dimension.
+Record `result.id` and the real delivery links in `result.variants`; use your named variant in the last path segment. GUI cleanup remains valid for API-created resources.
 
-## 5. Optional: private delivery and expiry
+## Optional private delivery — API plus local HMAC
 
-Set `CF_IMAGES_SIGNING_KEY` from Hosted Images → Keys before these commands:
+Load `CF_IMAGE_ID` with your recorded ID. Update only that owned image:
 
 ```sh
-npm run images -- private
-npm run images -- verify
-npm run images -- verify-access --expires 5
-npm run images -- sign --expires 60
+curl --fail-with-body --silent --show-error --request PATCH \
+  "$CF_BASE/images/v1/$CF_IMAGE_ID" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data '{"requireSignedURLs":true}'
 ```
 
-`private` PATCHes only your recorded image and records its current returned ID/delivery links. `verify` fetches signed variants and measures them again. `verify-access` makes unsigned, valid-HMAC and freshly expired GETs and prints only HTTP status evidence. Expected: unsigned denied, signed succeeds, expired denied. `sign` prints a short-lived detail link for manual viewing; do not store it in Git or the worksheet.
-
-If unsigned delivery succeeds, inspect the variant's **Always allow public access** setting. If signing fails, check the exact path/query, key and system clock. This is HMAC access control, not a university login.
-
-## 6. Explain and clean up
-
-Record the ID, variant names, actual dimensions, crop observation and response statuses. Then:
+Record the **returned** ID and current delivery links; an access update can change them. Privately load an Images signing key from **Hosted Images → Keys** into `CF_IMAGES_SIGNING_KEY`, and the current non-public detail URL into `IMAGES_DELIVERY_URL`. A management API token is not this HMAC key. Generate a 60-second link with Python 3 standard library (no packages):
 
 ```sh
-npm run images -- cleanup
+python3 - <<'PY'
+import hashlib, hmac, os, time
+from urllib.parse import urlsplit, urlunsplit, urlencode
+u = urlsplit(os.environ['IMAGES_DELIVERY_URL'])
+assert u.scheme == 'https' and u.netloc == 'imagedelivery.net' and not u.query
+query = urlencode({'exp': int(time.time()) + 60})
+sig = hmac.new(os.environ['CF_IMAGES_SIGNING_KEY'].encode(),
+               (u.path + '?' + query).encode(), hashlib.sha256).hexdigest()
+print(urlunsplit((u.scheme, u.netloc, u.path, query + '&sig=' + sig, '')))
+PY
 ```
 
-Deletes only your recorded image and the two created variants. No account signing key is removed.
+Load the returned limited URL privately into `SIGNED_IMAGE_URL`. Check fresh requests; keep only HTTP status evidence:
 
-## Recovery
+```sh
+curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' "$IMAGES_DELIVERY_URL"
+curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' "$SIGNED_IMAGE_URL"
+sleep 65
+curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' "$SIGNED_IMAGE_URL"
+```
 
-- HTTP 401/403: check account-scoped Images write permission and Paid storage activation.
-- Capacity/collision: inspect account-wide variants. Never fix a collision by editing another team's definition.
-- Delivery 404: verify ID, delivery hash and variant spelling in the actual dashboard.
-- The script records successful creations after each response. If interrupted before an ID is saved, find the sample by its workshop metadata and inspect/remove only that owned resource manually.
+Expected unsigned denial → valid signed success → expired denial. If unsigned succeeds, inspect the variant's public override. Do not save the full signed URL or delete an account signing key during lab cleanup.
 
-References: [variant API/options](https://developers.cloudflare.com/images/optimization/hosted-images/create-variants/), [image upload API](https://developers.cloudflare.com/api/resources/images/subresources/v1/methods/create/), [private HMAC delivery](https://developers.cloudflare.com/images/optimization/hosted-images/serve-private-images/).
+## Recovery and sources
+
+HTTP 401/403: check account grant and Paid storage. Delivery 404: check current ID, actual hash and variant spelling. Wrong size: check intrinsic dimensions and fit; scale-down is expected to yield 960×720.
+
+References: [Dashboard variants/fit](https://developers.cloudflare.com/images/optimization/hosted-images/create-variants/), [upload API](https://developers.cloudflare.com/api/resources/images/subresources/v1/methods/create/), [private HMAC](https://developers.cloudflare.com/images/optimization/hosted-images/serve-private-images/).

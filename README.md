@@ -1,73 +1,41 @@
 # Cloudflare Media Labs
 
-**Learn the theory. Run the APIs. Verify real media delivery.**
+**Learn the theory. Use the Dashboard. Inspect real API responses.**
 
-Hands-on Images, Stream and R2 labs for customers who already have a Cloudflare account. Every product command calls the real service using **your own credentials**; these are not the presentation's simulations.
+Hands-on Images, Stream and R2 labs for customers with a Cloudflare account. The participant route uses **Cloudflare Dashboard GUI first**, with direct HTTP API examples where needed. **No Node.js, npm, package installation or Git clone is required for the core labs.**
 
-**[Interactive workshop](https://mahidol-media-training.pongpisit.workers.dev/)** · **[Product theory](docs/00-theory.md)** · **[Setup](docs/setup.md)**
-
-## What you will build
-
-| Lab | Real result | Verification |
-|---|---|---|
-| [Images](docs/01-images.md) | One hosted JPEG, two account-wide named variants | Fetch/decode 320×180 and 960×720 images; optional private signature/expiry test |
-| [Stream](docs/02-stream.md) | A processed, captioned video requiring signed playback | Readiness + English caption checks, actual iframe playback, fresh HLS access/expiry requests |
-| [R2](docs/03-r2.md) | A private handout and completed multipart object | Real temporary GET, 5/5/2 MiB upload, download and SHA-256 comparison |
+**[Interactive workshop](https://mahidol-media-training.pongpisit.workers.dev/)** · **[Product theory](docs/00-theory.md)** · **[Setup](docs/setup.md)** · **[Evidence worksheet](docs/worksheet.md)**
 
 ## Start here
 
-1. Use **Node.js 24 LTS or later**, npm and Git.
-2. Enable **Images Paid storage**, **Stream storage capacity**, and **R2** in your account. Having an account alone does not enable all three products. These exercises use billable services: one small JPEG, one 20-second clip and a 12 MiB object. Check current pricing and delete the lab resources when finished.
-3. Follow [account/token/bucket setup](docs/setup.md), then:
+1. Complete [account and access setup](docs/setup.md): Images Paid storage, Stream capacity and a dedicated private R2 bucket.
+2. Download the [sample files](samples/) individually, or use **Code → Download ZIP** and extract it. Keep originals separately.
+3. Follow the numbered guides. Work in pairs: operator clicks/calls; partner checks settings and evidence. Use a unique prefix and manually record the exact resources you create.
 
-```sh
-git clone https://github.com/pongpisit/cloudflare-media-labs.git
-cd cloudflare-media-labs
-npm ci
-cp .env.example .env
-# Edit .env privately with your own account and scoped credentials.
-npm run doctor
-```
+| Lab | Dashboard work | Direct API / extension | Budget |
+|---|---|---|---|
+| [Images](docs/01-images.md) | Upload JPEG, create named variants, inspect real dimensions/crop, delete owned assets | Alternative REST upload/variant creation; optional private HMAC delivery | 35 min |
+| [Stream](docs/02-stream.md) | Upload/preview video, inspect processing, play English captions, copy iframe, delete owned video | Caption PUT/list GET, readiness GET, signed-policy POST and expiring playback token POST | 40 min |
+| [R2](docs/03-r2.md) | Private bucket, upload document/video, download actual object, compare SHA-256, delete owned keys | Temporary GET via documented AWS CLI signing; [direct S3 multipart calls](docs/04-r2-api.md) | 35 min |
 
-PowerShell: use `Copy-Item .env.example .env` instead of `cp` if needed. Do not upload `.env` to GitHub. `doctor` checks local configuration only; `images setup`, `stream upload` and `r2 preflight` exercise real permissions.
+These operations use billable products in **your account**. The samples are one small JPEG, a 20-second synthetic clip and a text document; the optional multipart extension adds 12 MiB. Review current product pricing and clean up when finished.
 
-Run the three guides **in order**. Each has theory, numbered commands, expected results, troubleshooting and cleanup. The operator runs commands in a trusted terminal; the partner reviews settings and evidence. Account setup is a pre-class task.
+## API tools and credentials
 
-## Command map
+The API examples are standard `curl` requests for Bash on macOS/Linux/WSL. A trusted REST client can send the same method, URL, headers and body. Use account-scoped Images/Stream bearer tokens; R2 S3 calls use separate bucket-scoped access keys. Never paste management credentials into the workshop preview.
 
-```sh
-npm run images -- --help
-npm run stream -- --help
-npm run r2 -- --help
-npm run fixture
-npm test
-```
+R2 presigning is local SigV4 signing, not a Cloudflare REST endpoint or a Dashboard button assumed by this guide. An instructor with **AWS CLI v2** can generate a link; participants consume it with a normal browser GET. The optional raw multipart exercise uses curl with `--aws-sigv4`, and Python 3 standard-library tools only for generating local data/parsing XML. Neither requires npm.
 
-`npm test` uses local protocol fixtures and deterministic binary data; it needs no credentials and creates no cloud resources. It verifies request formatting, signing, readiness handling, scope checks, multipart completion/abort behavior and fixture integrity. It does **not** prove your account's entitlements or actual playback. `verify` and `verify-access` commands explicitly perform live checks when you run them.
+## Evidence and ownership
 
-## Ownership and credentials
+- Record account label, unique variant names, image ID, video UID, bucket, exact object keys and any multipart upload ID in the [worksheet](docs/worksheet.md).
+- Cleanup is manual and limited to those recorded resources. A prefix is a naming convention, not a permission boundary.
+- Do not save API keys, full playback tokens or signed URLs in Git/screenshots/worksheets.
+- Inspect the HTTP response and REST `success`/`errors` before continuing. An upload response alone does not establish correct delivery, captions or authorization.
+- A blocked step stays **unperformed**; the presentation's labelled simulations explain mechanisms but are not real product evidence.
 
-- Your account ID and `LAB_PREFIX` are bound to a private, ignored `.lab/state.json` ledger. A random suffix makes each run's variant names and object keys distinct.
-- Cleanup targets only IDs/keys recorded by this run. It does not delete shared buckets, account signing keys, unrelated variants or other workshop runs.
-- REST bearer tokens are for Images/Stream. R2 uses a separate S3 Access Key ID + Secret Access Key, scoped to your dedicated bucket.
-- Images HMAC keys and API credentials stay in `.env`/the terminal. Only a limited delivery URL/token goes into a browser.
-- `sign`, `token` and `presign` intentionally print bearer capabilities. Use them immediately; do not commit, screenshot or share their full values. The ledger stores resource IDs and non-secret verification results, not signed URLs.
-- Run one terminal operation at a time. On an interrupted/uncertain upload, inspect the ledger and dashboard before repeating creation. Recorded R2 upload IDs can be cleaned up; hard interruption before an ID is saved requires dashboard inspection.
+## Maintainer tooling
 
-## Repository layout
+The earlier Node REST/S3 integrations and 12 local tests remain in `scripts/`, `tests/` and the pinned package files as optional maintainer tooling. They are not required by the participant guides. GitHub Actions checks these existing integrations without credentials or cloud mutations. Documentation review/local tests do not certify customer account permissions or actual playback.
 
-```text
-docs/          Setup, product context, three runnable lab guides and worksheet
-scripts/       Actual REST/S3 integrations and deterministic fixture generator
-samples/       Original JPEG, narrated MP4, aligned WebVTT and text document
-tests/         Local protocol, signing, multipart and integrity checks
-.env.example   Names/placeholders only
-.lab/          Generated private resource ledger (ignored)
-lab-output/    Generated/downloaded binaries (ignored)
-```
-
-## Complete the workshop
-
-Record observations in [the worksheet](docs/worksheet.md), then run the three cleanup commands. Remove the dedicated empty R2 bucket and revoke workshop credentials in the dashboard if no longer needed. Keep the original media and your non-secret evidence separately.
-
-This is an unofficial educational project, not a production LMS authorization service. Product behavior is grounded in the [linked official documentation](docs/00-theory.md). Source review and local tests have been performed; live participant outcomes must be established in each customer's own account.
+This is an unofficial educational project. Official sources are linked in [product theory](docs/00-theory.md) and each lab. It is not a production LMS authorization service.

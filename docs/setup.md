@@ -1,59 +1,45 @@
-# Setup — your own Cloudflare account
+# Setup — Dashboard first, direct API where needed
 
-## 1. Activate the services
+## 1. Prepare your Cloudflare account
 
-Select your intended account in the dashboard and copy its **Account ID** (32 hexadecimal characters).
+Sign in at [dash.cloudflare.com](https://dash.cloudflare.com/), complete MFA and select the intended account. Record its **Account ID** (32 hexadecimal characters).
 
-- **Images:** hosted storage requires Images Paid. Our core lab uses Hosted Images, not only the Free remote-transformations allowance. Allow room for one JPEG and two new named variants (100 account-wide definitions maximum).
-- **Stream:** activate sufficient stored-minute capacity for the 20-second clip. A completed transfer still needs encoding time.
-- **R2:** activate R2; create a dedicated **Standard**, private bucket such as `media-lab-yourname`. Confirm both `r2.dev` and custom-domain public access are disabled. The scripts do not create buckets or change public access/CORS.
+- **Images:** activate Paid hosted storage. Reserve one JPEG and two new named variants per pair; the account-wide maximum is 100 variants.
+- **Stream:** activate stored-minute capacity for the actual 20-second sample and its playback usage.
+- **R2:** activate R2 and create a dedicated **Standard**, private bucket. Keep public `r2.dev` and public custom-domain access disabled.
 
-Use sample media only. Review current [Images pricing](https://developers.cloudflare.com/images/pricing/), [Stream pricing](https://developers.cloudflare.com/stream/pricing/) and [R2 pricing](https://developers.cloudflare.com/r2/pricing/). No-egress-charge R2 does not make storage/operations free.
+Having an account alone does not establish product activation, capacity or effective write permissions. If your role cannot edit variants or video access, the authorized instructor performs that step. Review current [Images](https://developers.cloudflare.com/images/pricing/), [Stream](https://developers.cloudflare.com/stream/pricing/) and [R2](https://developers.cloudflare.com/r2/pricing/) pricing.
 
-## 2. Create Images/Stream REST credentials
+## 2. Download samples and open a worksheet
 
-In your user/account API-token controls, create a **custom, account-scoped token** for the selected account:
+Use the repository **Code → Download ZIP**, extract it and locate `samples/`; alternatively download each file from [samples](../samples/). No build or installation is needed. Open the JPEG; listen to the MP4 and review the matching WebVTT. Both are original synthetic media.
 
-- Images **Edit/Write** (the API reference calls it `Images Write`). The lab creates/deletes variants and uploads/changes/deletes its image.
-- Stream **Edit/Write**. The lab uploads, updates its own video, uploads captions, reads status, creates playback tokens and deletes its video.
+Choose a unique lowercase prefix such as `media-pair07-20261004`. Record it with every created resource in [worksheet.md](worksheet.md). Never reuse/edit another pair's variant/key. For API examples, open a Bash terminal in the extracted repository root so `samples/...` paths resolve.
 
-Cloudflare dashboard labels may say **Edit**, while API permission names say **Write**. A read-only token cannot run the mutations. Use a bearer API token, not a Global API Key or email/key pair. If your organization requires separate product tokens, run one product at a time with its scoped token in `CF_API_TOKEN`.
+## 3. Prepare direct REST calls
 
-Set `CF_ACCOUNT_ID`, `CF_API_TOKEN` and your own `LAB_PREFIX` in `.env`. The prefix must be 3–30 lowercase letters/digits/hyphens, starting with a letter. `media-yourname` is deliberately rejected until you replace it.
+Use `curl` (with `--fail-with-body`) or a trusted REST client. Create an account-scoped custom token with **Images Edit/Write** and **Stream Edit/Write** as needed. API reference names can say Write while the dashboard says Edit. A read-only token cannot upload/change/delete resources.
 
-## 3. Create R2 S3 credentials
-
-From **R2 object storage → Account Details → API Tokens**, create **Object Read & Write** credentials, scoped only to your dedicated bucket. Record the **Access Key ID** and **Secret Access Key** in `.env`. These are different from `CF_API_TOKEN`; bucket object credentials use the S3-compatible API.
-
-Set `R2_BUCKET`. Keep `R2_JURISDICTION=default` for a default-jurisdiction bucket; set `eu`, `us` or `fedramp` only if the bucket was actually created in that jurisdiction. The endpoint must match. SDK region is `auto`; this does not relocate an existing bucket.
-
-Run:
+Privately load the token into the trusted terminal from your password manager or a hidden prompt. In Bash:
 
 ```sh
-npm run doctor
-npm run r2 -- preflight
+read -r -s -p 'Cloudflare API token: ' CF_API_TOKEN; printf '\n'
+export CF_API_TOKEN
+export CF_ACCOUNT_ID='REPLACE_WITH_YOUR_ACCOUNT_ID'
+export PAIR_PREFIX='REPLACE_WITH_YOUR_UNIQUE_PREFIX'
+export CF_BASE="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID"
 ```
 
-`doctor` shows configuration readiness without printing secret values. `r2 preflight` makes a real, prefix-limited list request. Newly changed token permissions can take time to propagate; inspect the dashboard and retry the read before changing permissions.
+Replace the two non-secret placeholders. Do not enable shell tracing or project credential-bearing responses. For JSON Cloudflare REST calls, check **HTTP success and `success: true` with no API errors**. Token creation responses contain bearer capabilities: inspect privately and do not save them as evidence. You can send these same requests from a trusted REST client using environment variables and multipart-file controls.
 
-## 4. Optional Images private-delivery extension
+## 4. Optional R2 API extension
 
-Open **Hosted Images → Keys**, copy an Images signing key into `CF_IMAGES_SIGNING_KEY`. The code uses HMAC-SHA256 over the delivery path/query. It never creates, revokes or rotates account signing keys. Leave this variable empty until you choose the optional private-image extension.
+The GUI upload/download/checksum lab needs no S3 credentials. For temporary GET or multipart, an authorized operator creates **Object Read & Write** R2 credentials scoped only to the dedicated bucket. Load `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` privately; these are not the general REST bearer token.
 
-## 5. Inspect the supplied media
+Set `R2_BUCKET`, `R2_KEY` and `R2_ENDPOINT`. Default endpoint: `https://<account-id>.r2.cloudflarestorage.com`. Jurisdictional buckets use the matching `.eu`, `.us` or `.fedramp` account endpoint. Region `auto` does not choose jurisdiction. AWS CLI v2 is needed only for the optional presigned-link step; raw S3 requests need curl with `--aws-sigv4` (added in curl 7.75.0).
 
-Open `samples/sample-image.jpg`. Play `samples/sample-video.mp4` with audio and read `samples/captions-en.vtt`; the four English cues match the 20-second synthetic narration. No university footage or personal data is included.
+## 5. Cleanup preparation
 
-## Troubleshooting preflight
+Keep an ownership checklist rather than relying on automated cleanup. After the labs delete only recorded images/videos/variant definitions/object keys/folder markers. Remove the dedicated empty bucket and revoke workshop credentials when no longer needed. Clear preview URLs and terminal secrets.
 
-| Result | Next check |
-|---|---|
-| Missing environment / invalid prefix | Edit your local `.env`; restart the command |
-| REST HTTP 401/403 | Correct token, account resource scope and product permission; do not expand to a Global API Key |
-| Hosted Images unavailable | Images Paid storage activation; Free transformations are a different path |
-| Stream storage unavailable | Stored-minute entitlement/capacity |
-| R2 AccessDenied | Bucket-scoped S3 credentials and propagation; general bearer token is not the S3 credential |
-| R2 endpoint mismatch | Bucket jurisdiction, not simply where the customer is located |
-| Existing ledger belongs to another account | Clean up using the original `.env`; use a separate checkout for another account |
-
-References: [Images pricing](https://developers.cloudflare.com/images/pricing/), [API token creation](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/), [Images upload API](https://developers.cloudflare.com/api/resources/images/subresources/v1/methods/create/), [R2 authentication](https://developers.cloudflare.com/r2/api/tokens/).
+References: [API tokens](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/), [Images variants](https://developers.cloudflare.com/images/optimization/hosted-images/create-variants/), [R2 credentials/jurisdiction](https://developers.cloudflare.com/r2/api/tokens/).

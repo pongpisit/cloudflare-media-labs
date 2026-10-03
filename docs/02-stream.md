@@ -1,69 +1,100 @@
-# Lab 2 — ready, captioned and protected playback
+# Lab 2 — ready, captioned and protected playback (40 minutes)
 
-Read [Stream theory](00-theory.md#stream-file--renditions--manifests--player) and complete [setup](setup.md). Stream must be activated with capacity and account-scoped Stream write permission.
+Read [Stream theory](00-theory.md#stream-file--renditions--manifests--player) and complete [setup](setup.md). **Dashboard for upload/player; direct REST for captions and access.** All API calls target your recorded owned video.
 
-## 1. Upload the actual English clip
+## 1. Upload in the Dashboard (0–7 min)
 
-```sh
-npm run stream -- upload
-```
+Find **Stream → Videos** in your account, select its upload/Quick upload control and upload `samples/sample-video.mp4`. Give it a pair-prefixed name if available. Record the **video UID** and copy the actual iframe `src`/customer hostname from its embed details. This 20-second sample is synthetic; public UID-based access is the initial default.
 
-Uploads `samples/sample-video.mp4` with basic multipart form POST, records the returned UID, then updates **that video** to `requireSignedURLs=true`. Stream's default is public UID-based access before this update. The sample has no private customer data. If the access update fails, retain the UID and inspect/fix that owned video; do not upload it again as a workaround.
-
-## 2. Wait for playability
+API alternative — run this only if you did not already upload in the GUI:
 
 ```sh
-npm run stream -- ready
+curl --fail-with-body --silent --show-error "$CF_BASE/stream" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --form 'file=@samples/sample-video.mp4'
 ```
 
-Polls for up to five minutes, stopping at `readyToStream=true`. The printed all-quality progress can still be below 100. Processing error/timeout stops the command; rerun `ready` later to resume inspecting the same UID.
+Record `result.uid`. Set `CF_VIDEO_UID` to that value in your terminal or REST client.
 
-## 3. Upload and inspect captions independently
+## 2. Inspect readiness (7–12 min)
+
+Wait for dashboard playback to become available, then listen to the clip. Inspect the actual read response:
 
 ```sh
-npm run stream -- captions
-npm run stream -- verify
+curl --fail-with-body --silent --show-error "$CF_BASE/stream/$CF_VIDEO_UID" \
+  --header "Authorization: Bearer $CF_API_TOKEN"
 ```
 
-Uploads `samples/captions-en.vtt` through `PUT /stream/<uid>/captions/en`, then separately polls English caption readiness. `verify` checks video readiness, signed-playback policy and ready English track. Caption metadata alone does not establish accurate text/timing; the next step is required.
+Check `result.readyToStream`, `result.status.state` and `result.status.pctComplete`. Playable is `readyToStream=true`; all-quality encoding can still be incomplete. Repeat the GET after a reasonable wait; do not upload duplicates if processing is slow. Preserve an error/blocked observation.
 
-## 4. Play the real iframe
+## 3. Attach and verify English captions (12–22 min)
+
+If the current dashboard exposes caption upload, choose the owned video and upload `captions-en.vtt` as English. Otherwise send the documented PUT:
 
 ```sh
-npm run stream -- token --expires 60
+curl --fail-with-body --silent --show-error --request PUT \
+  "$CF_BASE/stream/$CF_VIDEO_UID/captions/en" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --form 'file=@samples/captions-en.vtt'
+
+curl --fail-with-body --silent --show-error "$CF_BASE/stream/$CF_VIDEO_UID/captions" \
+  --header "Authorization: Bearer $CF_API_TOKEN"
 ```
 
-Prints an actual customer-host iframe URL using `/token` with explicit Unix expiry. The playback token replaces the video UID in the path; the REST API token stays in the terminal.
+Confirm an `en` track with `status: ready` independently of video readiness. An existing English track on this video is replaced. Select English in the actual player and review all four cues against the speech, especially the first/final cue. A ready metadata response alone does not prove caption accuracy.
 
-Open the workshop's **[live Stream preview](https://mahidol-media-training.pongpisit.workers.dev/labs.html#live-preview)** and paste the printed iframe URL. Load it, click Play, enable English captions, listen to all 20 seconds, and inspect the first and last cues. Clear the preview when finished. This verifies a real Stream embed, not your LMS's CSP/integration.
+## 4. Embed, then require signed access (22–31 min)
 
-Alternatively, use the owned video's dashboard preview. Do not paste `CF_API_TOKEN` into any browser field.
+Paste only the iframe `src` from your own video's dashboard embed into the **[live preview](https://mahidol-media-training.pongpisit.workers.dev/labs.html#live-preview)**. Load it, click Play and enable English captions. Do not paste raw HTML or API credentials.
 
-## 5. Verify a fresh access/expiry sequence
+After verifying the public sample preview, require signed playback with the native REST update:
 
 ```sh
-npm run stream -- verify-access --expires 5
+curl --fail-with-body --silent --show-error --request POST \
+  "$CF_BASE/stream/$CF_VIDEO_UID" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data "{\"uid\":\"$CF_VIDEO_UID\",\"requireSignedURLs\":true}"
 ```
 
-Uses the actual Stream HLS manifest endpoint: unsigned UID denied → valid token succeeds → after a short wait, the same token denied on a **new request**. This does not wait for buffered playback to stop, and it does not download/store/proxy manifests.
+Confirm `success: true` and `result.requireSignedURLs: true`. A fresh UID-only player request should now be denied. If your dashboard exposes an equivalent signed-URL control, use it and verify the same property with GET.
 
-If playback fails while the manifest check passes, inspect allowed-origin settings, the exact customer hostname, token lifetime and browser/CSP errors. If you explicitly restrict origins, allow `mahidol-media-training.pongpisit.workers.dev` for the hosted preview; local embedding needs the documented host/port entry as well. Allowed origins are an embedding policy, not identity authentication.
+## 5. Issue a short token and test fresh requests (31–38 min)
 
-## 6. Record and clean up
-
-Record UID, readiness, all-quality progress, caption readiness, actual audio/text match, iframe result and access HTTP statuses. Do not record the token.
+Set a Unix expiry 60 seconds ahead. The following Bash uses `date`, not Node:
 
 ```sh
-npm run stream -- cleanup
+EXPIRES_AT=$(( $(date +%s) + 60 ))
+curl --fail-with-body --silent --show-error --request POST \
+  "$CF_BASE/stream/$CF_VIDEO_UID/token" \
+  --header "Authorization: Bearer $CF_API_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data "{\"exp\":$EXPIRES_AT}"
 ```
 
-Deletes only this run's recorded video; attached captions are removed with it. Clear any preview URL.
+Inspect the token response **privately** and load `result.token` into `PLAYBACK_TOKEN`. Replace only the UID segment in the actual iframe URL with that limited token, retaining the real hostname and `/iframe`. Verify playback and captions immediately; clear the preview afterwards.
 
-## Recovery
+Set `STREAM_HOST` to the actual `customer-<code>.cloudflarestream.com` hostname, without protocol or path. Check fresh HLS GETs without caching/storing/proxying manifests:
 
-- Processing blocks: inspect the source/error in dashboard and resume `ready`; do not repeatedly upload.
-- Captions missing: inspect independent track readiness and choose English in the player. `en` uploads replace that owned video's existing English track.
-- Access failure: check `requireSignedURLs`, exact token path and time. A `/token` call is a live, rate-limited API operation.
-- Preserve your original source separately: Stream's encoded download is not the exact uploaded original.
+```sh
+curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' \
+  "https://$STREAM_HOST/$CF_VIDEO_UID/manifest/video.m3u8"
+curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' \
+  "https://$STREAM_HOST/$PLAYBACK_TOKEN/manifest/video.m3u8"
+sleep 65
+curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' \
+  "https://$STREAM_HOST/$PLAYBACK_TOKEN/manifest/video.m3u8"
+```
 
-References: [basic uploads](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file/), [captions](https://developers.cloudflare.com/stream/edit-videos/adding-captions/), [signed playback/token customization](https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/), [manifests](https://developers.cloudflare.com/stream/viewing-videos/using-own-player/).
+Expected unsigned denial → signed success → expired denial on a new request. Buffered playback continuing is not an expiry test. If allowed origins are restricted, include `mahidol-media-training.pongpisit.workers.dev` for this preview. Terminal manifest tests may also need the approved origin as a `Referer` header; diagnose that gate separately rather than disabling policy. Signed access is not university authentication.
+
+## 6. Record and delete the owned video (38–40 min)
+
+Record UID, readiness/progress, English status, real caption/audio match and HTTP outcomes; never the token. Delete only that owned video through its dashboard action, then clear preview/terminal capabilities. Captions are removed with the video. API alternative:
+
+```sh
+curl --fail-with-body --silent --show-error --request DELETE \
+  "$CF_BASE/stream/$CF_VIDEO_UID" --header "Authorization: Bearer $CF_API_TOKEN"
+```
+
+References: [upload](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file/), [caption PUT/list](https://developers.cloudflare.com/stream/edit-videos/adding-captions/), [signed playback and origins](https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/), [manifests](https://developers.cloudflare.com/stream/viewing-videos/using-own-player/).
