@@ -1,5 +1,7 @@
 # R2 API extension — inspect actual multipart requests
 
+**Windows PowerShell users:** follow [Windows manual multipart with AWS CLI](05-r2-windows.md) instead. The blocks on this page use Bash/macOS/Linux/WSL, including Python heredocs; they cannot be pasted directly into PowerShell.
+
 This optional instructor/API route uses **direct S3 HTTP calls**, not npm or a custom backend. Prepare curl 7.76.0+ with `--aws-sigv4` and `--fail-with-body` (verify `curl --help all`), Python 3 standard library, a dedicated private Standard bucket and its Object Read & Write S3 credentials. Run from the extracted repository root. Load credentials privately as in [setup](setup.md); keep them out of evidence.
 
 Set `R2_ENDPOINT`, `R2_BUCKET` and `PAIR_PREFIX` to your actual values. Use the correct jurisdiction endpoint. The following key is ASCII; check in the Dashboard that it does not already exist. Record it **before** starting, and never use another team's key.

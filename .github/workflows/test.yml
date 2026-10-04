@@ -13,3 +13,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+  windows-docs:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        shell: [powershell, pwsh]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse examples and run offline helper/multipart checks
+        shell: ${{ matrix.shell }}
+        run: ./tests/windows-docs.ps1
