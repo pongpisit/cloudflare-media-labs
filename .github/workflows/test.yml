@@ -15,11 +15,11 @@ jobs:
       - run: npm test
   windows-docs:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        shell: [powershell, pwsh]
     steps:
       - uses: actions/checkout@v4
-      - name: Parse examples and run offline helper/multipart checks
-        shell: ${{ matrix.shell }}
+      - name: Windows PowerShell 5.1 syntax and offline lab checks
+        shell: powershell
+        run: ./tests/windows-docs.ps1
+      - name: PowerShell 7 syntax and offline lab checks
+        shell: pwsh
         run: ./tests/windows-docs.ps1
