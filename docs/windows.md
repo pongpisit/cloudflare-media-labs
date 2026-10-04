@@ -1,5 +1,7 @@
 # Windows quick start — browser, PowerShell and API
 
+> **Beginner? [Start with the browser-only guide](beginner-start.md).** The PowerShell setup below is for instructors and technical operators.
+
 Use **Windows 10/11 + Edge or Chrome**. The core route does not need Node.js, npm, Git, WSL or administrator access to your PC. Use **Windows PowerShell 5.1** or **PowerShell 7** for the commands on this page and the Windows sections of each lab. Do not paste Bash blocks into PowerShell or Command Prompt.
 
 ## 1. Choose your route

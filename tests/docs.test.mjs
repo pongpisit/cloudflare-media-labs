@@ -41,3 +41,36 @@ test('participant Markdown links resolve to existing files and section anchors',
     }
   }
 });
+
+test('beginner product guides preserve browser-only tasks and the 110-minute practice budget', async () => {
+  for (const [product, minutes] of [['images', 35], ['stream', 40], ['r2', 35]]) {
+    const markdown = await readFile(path.join(root, `docs/beginner-${product}.md`), 'utf8');
+    assert.doesNotMatch(markdown, /```|\$env:|curl\.exe|--request|npm (?:run|ci|install)|git clone/,
+      `${product}: learner guide includes commands`);
+    assert.match(markdown, /\*\*Do this\*\*/);
+    assert.match(markdown, /\*\*You should see:/);
+    assert.match(markdown, /\*\*If it does not work:/);
+    assert.match(markdown, /clean up/i);
+    const sections = [...markdown.matchAll(/^## \d+\. .+ — (\d+) minutes$/gm)];
+    assert.equal(sections.reduce((sum, [, duration]) => sum + Number(duration), 0), minutes,
+      `${product}: numbered timeboxes must fit the lab`);
+    assert.match(markdown, /only.*(?:recorded|own|personally created)|(?:recorded|own).*only/i);
+  }
+  const r2 = await readFile(path.join(root, 'docs/beginner-r2.md'), 'utf8');
+  assert.match(r2, /actual R2 download/);
+  assert.match(r2, /not the original selected twice/);
+  const stream = await readFile(path.join(root, 'docs/beginner-stream.md'), 'utf8');
+  assert.match(stream, /if that control is available/);
+  assert.match(stream, /instructor attaches the file/);
+  assert.match(stream, /You do not create a token or run commands/);
+});
+
+test('beginner caption checks match the supplied WebVTT rather than invented text', async () => {
+  const captions = await readFile(path.join(root, 'samples/captions-en.vtt'), 'utf8');
+  const cues = captions.trim().split(/\r?\n\s*\r?\n/).filter(block => block.includes('-->'))
+    .map(block => block.split(/\r?\n/).filter(line => !line.includes('-->') && !/^\d+$/.test(line)).join(' '));
+  assert.equal(cues.length, 4);
+  const guide = await readFile(path.join(root, 'docs/beginner-stream.md'), 'utf8');
+  assert.ok(guide.includes(cues[0]), 'First-cue review must use the actual sample');
+  assert.ok(guide.includes(cues.at(-1)), 'Final-cue review must use the actual sample');
+});

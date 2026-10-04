@@ -1,5 +1,7 @@
 # Lab 2 — ready, captioned and protected playback (40 minutes)
 
+> **Beginner? [Use the short Stream guide](beginner-stream.md).** This page is the retained instructor/API reference.
+
 Read [Stream theory](00-theory.md#stream-file--renditions--manifests--player) and complete [setup](setup.md). **Dashboard for upload/player; direct REST for captions and access.** All API calls target your recorded owned video.
 
 **Windows preferred:** follow the click paths below and use the complete [Windows PowerShell/API route](#windows-powershellapi-option) for terminal operations. The `sh` blocks are Bash alternatives. Expected result: an actual playable/captioned video, signed-access fresh-request tests, and owned-resource cleanup.

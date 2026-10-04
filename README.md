@@ -1,26 +1,32 @@
 # Cloudflare Media Labs
 
-**Learn the theory. Use the Dashboard. Inspect real API responses.**
+**Click. Copy and paste. Check what happened.**
 
-Hands-on Images, Stream and R2 labs for customers with a Cloudflare account, with **Windows 10/11 as the preferred participant platform**. Each lab has numbered **Cloudflare Dashboard click paths**, expected results, and **Windows PowerShell/API alternatives**. No Node.js, npm, Git clone or WSL is required for the core route. Optional R2 CLI exercises use AWS CLI v2.
+Beginner-friendly Images, Stream and R2 labs for people who publish media rather than write code. Use **Windows 10/11 + Edge or Chrome**, Cloudflare Dashboard, and the supplied samples. Each short guide tells you what to click, what to copy, what you should see, and how to finish. **No terminal, API key, ZIP extraction or software installation is required for the learner route.**
 
-**[Interactive workshop](https://mahidol-media-training.pongpisit.workers.dev/)** · **[Windows quick start](docs/windows.md)** · **[Product theory](docs/00-theory.md)** · **[Setup](docs/setup.md)** · **[Evidence worksheet](docs/worksheet.md)**
+### [Start here — the beginner guide →](docs/beginner-start.md)
+
+**[Lab guide and local tools](https://mahidol-media-training.pongpisit.workers.dev/labs.html)** · **[Interactive presentation](https://mahidol-media-training.pongpisit.workers.dev/)** · **[My worksheet](docs/beginner-worksheet.md)**
 
 ## Start here
 
-1. On Windows, start with the [Windows browser/PowerShell walkthrough](docs/windows.md). Complete [account and access setup](docs/setup.md): Images Paid storage, Stream capacity and a dedicated private R2 bucket.
-2. Download the [sample files](samples/) individually, or use **Code → Download ZIP** and extract it. Keep originals separately.
-3. Follow the numbered guides. Work in pairs: operator clicks/calls; partner checks settings and evidence. Use a unique prefix and manually record the exact resources you create.
+1. Ask the instructor for the prepared Cloudflare account and private R2 bucket.
+2. Open [the lab guide](https://mahidol-media-training.pongpisit.workers.dev/labs.html), download the four samples, and copy your personal lab names from **Your lab tools**.
+3. Follow these guides in order. Work with a partner and record the actual results in [your worksheet](docs/beginner-worksheet.md).
 
-| Lab | Dashboard work | Direct API / extension | Budget |
+| Lab | What you do | What you should show | Budget |
 |---|---|---|---|
-| [Images](docs/01-images.md) | Upload JPEG, create named variants, inspect real dimensions/crop, delete owned assets | PowerShell REST upload/variants/privacy; native .NET HMAC expiry test; Bash alternative | 35 min |
-| [Stream](docs/02-stream.md) | Upload/preview, processing, captions, embed, delete owned video | PowerShell caption PUT/readiness/access/token; optional export/clip/Analytics | 40 min |
-| [R2](docs/03-r2.md) | Private bucket, upload, actual download/SHA-256, delete owned keys | Windows AWS CLI upload/download/presign; [Windows manual multipart](docs/05-r2-windows.md); [Bash raw S3](docs/04-r2-api.md) | 35 min |
+| [Images](docs/beginner-images.md) | Upload a picture, copy two variant names, open and download both views | Card **320×180**, detail **960×720**, and an explained crop | 35 min |
+| [Stream](docs/beginner-stream.md) | Upload once, wait, play, add/review captions with instructor help when needed | A real clip with matching sound and captions | 40 min |
+| [R2](docs/beginner-r2.md) | Upload private files, download the video, use the browser comparison tool | The actual downloaded file matches the original | 35 min |
 
 These operations use billable products in **your account**. The samples are one small JPEG, a 20-second synthetic clip and a text document; the optional multipart extension adds 12 MiB. Review current product pricing and clean up when finished.
 
-## API tools and credentials
+## Help for instructors and technical operators
+
+Start with [Instructor preparation](docs/instructor.md). It covers account/permissions, prepared variants, caption API assistance, private-access demonstrations and cleanup. The earlier detailed API guides remain available there as technical references. Beginners do not need to choose among those routes.
+
+### Retained API tools and credentials
 
 The preferred Windows examples use **Windows PowerShell 5.1 or PowerShell 7**, native `Invoke-RestMethod` for JSON, and **`curl.exe`** for multipart files/status checks. [Windows quick start](docs/windows.md) includes hidden token entry, a copy/paste REST helper, and REST-client steps. Existing Bash examples remain available for macOS/Linux/WSL. Use account-scoped Images/Stream bearer tokens; R2 S3 calls use separate bucket-scoped access keys.
 
@@ -28,14 +34,14 @@ R2 presigning is local SigV4 signing, not a Cloudflare REST endpoint or a Dashbo
 
 ## Evidence and ownership
 
-- Record account label, unique variant names, image ID, video UID, bucket, exact object keys and any multipart upload ID in the [worksheet](docs/worksheet.md).
+- Record account label, unique variant names, image ID, video UID, bucket and exact object keys in [My worksheet](docs/beginner-worksheet.md). Instructors use the [technical worksheet](docs/worksheet.md) for API extensions.
 - Cleanup is manual and limited to those recorded resources. A prefix is a naming convention, not a permission boundary.
 - Do not save API keys, full playback tokens or signed URLs in Git/screenshots/worksheets.
-- Inspect the HTTP response and REST `success`/`errors` before continuing. An upload response alone does not establish correct delivery, captions or authorization.
+- Check the actual image, player/captions and downloaded file before continuing. An upload alone does not establish correct delivery or authorization.
 - A blocked step stays **unperformed**; the presentation's labelled simulations explain mechanisms but are not real product evidence.
 
 ## Maintainer tooling
 
-The earlier Node REST/S3 integrations remain in `scripts/`, `tests/` and the pinned package files as optional maintainer tooling. They are not required by participants. `npm test` checks the 12 integration cases plus participant document links. GitHub Actions also checks documented PowerShell syntax and runs the local REST/S3 helpers and multipart fixture/completion logic with mocked transports on **Windows PowerShell 5.1 and PowerShell 7** (`tests/windows-docs.ps1`). No credentials or cloud mutations are used. These checks do not certify customer account permissions or actual playback.
+The earlier Node REST/S3 integrations remain in `scripts/`, `tests/` and the pinned package files as optional maintainer tooling. They are not required by participants. `npm test` checks the integration cases, document links, beginner-route constraints, timeboxes and actual caption-file consistency. GitHub Actions also checks documented PowerShell syntax and runs the local REST/S3 helpers and multipart fixture/completion logic with mocked transports on **Windows PowerShell 5.1 and PowerShell 7** (`tests/windows-docs.ps1`). No credentials or cloud mutations are used. These checks do not certify customer account permissions or actual playback.
 
 This is an unofficial educational project. Official sources are linked in [product theory](docs/00-theory.md) and each lab. It is not a production LMS authorization service.

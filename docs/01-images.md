@@ -1,5 +1,7 @@
 # Lab 1 — one original, two intentional views (35 minutes)
 
+> **Beginner? [Use the short browser-only Images guide](beginner-images.md).** This page is the retained instructor/API reference.
+
 Read [Images theory](00-theory.md#images-transformations-are-a-publishing-contract) and complete [setup](setup.md). **Primary route: Cloudflare Dashboard.**
 
 **Choose a route:** follow steps 1–4 for browser work, or use [Windows PowerShell/API](#windows-powershellapi-option) after [Windows setup](windows.md). Bash commands are under [Direct API alternative](#direct-api-alternative). Expected result: one original, thumb **320×180**, detail **960×720**, recorded crop observation and owned-resource cleanup.
