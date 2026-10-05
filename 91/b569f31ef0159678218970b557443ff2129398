@@ -1,0 +1,23 @@
+docs/03-r2.md
+  s_5f434bbb853927::t_9e46e04247db9a 12,99
+docs/instructor.md
+  s_5f434bbb853927::t_63d9d16d3e9f86 8-9,13,21,33
+docs/setup.md
+  s_5f434bbb853927::t_b4fdc5b4a0ab77 5-6,12,20,34-35,52-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "91b569f31ef0159678218970b557443ff2129398",
+  "prompts": {},
+  "sessions": {
+    "s_5f434bbb853927": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_efdd56eccffewqqUHqBhIQsL71",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "pongpisit <pongpisit@cloudflare.com>"
+    }
+  }
+}
