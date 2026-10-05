@@ -10,21 +10,21 @@ Beginner-friendly Images, Stream and R2 labs for people who publish media rather
 
 ## Start here
 
-1. Ask the instructor for the prepared Cloudflare account and private R2 bucket.
-2. Open [the lab guide](https://mahidol-media-training.pongpisit.workers.dev/labs.html), download the four samples, and copy your personal lab names from **Your lab tools**.
+1. Select the approved account and follow [First-time setup](docs/beginner-setup.md): Account ID, product access and scoped API credentials for authorized operators.
+2. Open [the lab guide](https://mahidol-media-training.pongpisit.workers.dev/labs.html), download the four samples, and copy your folder, bucket and variant names from **Your lab tools**.
 3. Follow these guides in order. Work with a partner and record the actual results in [your worksheet](docs/beginner-worksheet.md).
 
 | Lab | What you do | What you should show | Budget |
 |---|---|---|---|
-| [Images](docs/beginner-images.md) | Upload a picture, copy two variant names, open and download both views | Card **320×180**, detail **960×720**, and an explained crop | 35 min |
+| [Images](docs/beginner-images.md) | Create/check two variants first, then upload a picture, open and download both views | Card **320×180**, detail **960×720**, and an explained crop | 35 min |
 | [Stream](docs/beginner-stream.md) | Upload once, wait, play, add/review captions with instructor help when needed | A real clip with matching sound and captions | 40 min |
-| [R2](docs/beginner-r2.md) | Upload private files, download the video, use the browser comparison tool | The actual downloaded file matches the original | 35 min |
+| [R2](docs/beginner-r2.md) | Create a private Standard bucket, upload files, download the video and compare locally | Recorded bucket/privacy and an actual download matching the original | 35 min |
 
 These operations use billable products in **your account**. The samples are one small JPEG, a 20-second synthetic clip and a text document; the optional multipart extension adds 12 MiB. Review current product pricing and clean up when finished.
 
 ## Help for instructors and technical operators
 
-Start with [Instructor preparation](docs/instructor.md). It covers account/permissions, prepared variants, caption API assistance, private-access demonstrations and cleanup. The earlier detailed API guides remain available there as technical references. Beginners do not need to choose among those routes.
+Start with [Instructor preparation](docs/instructor.md). It covers account/permissions, teaching resource creation with explicit role-restricted fallbacks, scoped REST/R2 credentials, caption assistance, private-access demonstrations and owned cleanup. The earlier detailed API guides remain available as technical references. Beginners do not need to choose among those routes.
 
 ### Retained API tools and credentials
 

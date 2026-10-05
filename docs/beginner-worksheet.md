@@ -7,7 +7,9 @@ Copy this into a local document. Tick only what you actually completed. Keep nam
 ```text
 Name / group:
 Workshop account name:
+Workshop Account ID (not Zone ID):
 My lab label / folder name:
+My copied bucket name:
 My card variant name:
 My detail variant name:
 ```
@@ -17,6 +19,7 @@ My detail variant name:
 ```text
 My Image ID:
 Variants created by: me / instructor
+Saved settings checked before upload: yes / not checked
 Card downloaded dimensions:
 Detail downloaded dimensions:
 One edge removed by the card crop:
@@ -50,7 +53,9 @@ My video deleted: yes / not yet
 ## R2
 
 ```text
-Prepared bucket name:
+Actual bucket name:
+Bucket created by: me / instructor / shared fallback
+Storage class / approved location:
 My document key:
 My video key:
 Public routes confirmed disabled: yes / not checked
@@ -58,11 +63,29 @@ Original file selected:
 Actual downloaded file selected:
 Comparison result: MATCH / MISMATCH / not performed
 My files and own folder marker deleted: yes / not yet
+My own empty bucket deleted: yes / instructor-owned / shared fallback / not yet
 ```
 
 - [ ] The second file came from the real R2 download.
 - [ ] I recorded the actual comparison result.
 - [ ] I can explain why R2 storage does not replace Stream processing.
+
+## API setup — operator or observed demonstration
+
+No secret values belong here. If this extension was not performed, write **not performed**. A token name or active status alone is not evidence of effective product access.
+
+```text
+REST token name / required product:
+Approved account scope / expiry:
+REST token created by: authorized operator / instructor / not performed
+Read-only endpoint check: observed response / not performed
+Owned REST token revoked: yes / not yet / not performed
+R2 token name / only permitted bucket:
+R2 credentials created by: authorized operator / instructor / not performed
+Matching S3 endpoint jurisdiction:
+Read-only object-list check: observed response / not performed
+Owned R2 token revoked: yes / not yet / not performed
+```
 
 ## Finish
 

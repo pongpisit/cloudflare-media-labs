@@ -39,11 +39,11 @@ If your folder is nested, use File Explorer's address bar to copy its full path 
 ## 3. Select the account and create a REST token
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → sign in/MFA → select the workshop account.
-2. Find its **Account ID** using the [official account-ID instructions](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/). Copy the 32-character account ID, not a Zone ID or Images delivery hash.
+2. Use **Search (Ctrl/Command+K) → Copy account ID**, following the [official account-ID instructions](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/). Copy the 32-character account ID, not a Zone ID or Images delivery hash.
 3. Profile/avatar → **My Profile → API Tokens → Create Token → Create Custom Token**. If labels move, use the [API token page](https://dash.cloudflare.com/profile/api-tokens).
 4. Name it with your workshop prefix. Add **Account → Cloudflare Images → Edit** and/or **Account → Stream → Edit**, only for the labs you will operate. API docs sometimes call these Write permissions.
 5. Under **Account Resources**, choose **Include → Specific account → your workshop account**. Review effective permissions with the instructor; a token cannot grant access your identity lacks.
-6. Set an appropriate workshop expiry if offered → review summary → create. Copy the token privately to your password manager. Do not put it in the worksheet.
+6. Set the approved workshop **TTL/expiry → Continue to summary → review name/product/account/expiry → Create Token**. Store the once-shown secret privately in your password manager, not the worksheet. [First-time setup](beginner-setup.md) adds operator/ownership, intended read-only verification and revocation steps. Account-owned tokens are an authorized alternative requiring provisioning capabilities/Super Administrator and endpoint compatibility.
 
 Set the non-secret values, then enter the token in a hidden prompt. Variables live only in this PowerShell session:
 
