@@ -2,11 +2,43 @@
 
 **Click. Copy and paste. Check what happened.**
 
-Beginner-friendly Images, Stream and R2 labs for people who publish media rather than write code. Use **Windows 10/11 + Edge or Chrome**, Cloudflare Dashboard, and the supplied samples. Each short guide tells you what to click, what to copy, what you should see, and how to finish. **No terminal, API key, ZIP extraction or software installation is required for the learner route.**
+Beginner-friendly Images, Stream and R2 labs for people who publish media rather than write code. Use **Windows 10/11 + Edge or Chrome**, Cloudflare Dashboard, and the supplied samples. Each short guide tells you what to click, what to copy, what you should see, and how to finish. **No terminal, API key or software installation is required for the learner route.** The hosted guide needs no download or ZIP extraction; the download-first browser kits (below) need only a ZIP extraction.
 
 ### [Start here — the beginner guide →](docs/beginner-start.md)
 
 **[Lab guide and local tools](https://mahidol-media-training.pongpisit.workers.dev/labs.html)** · **[Interactive presentation](https://mahidol-media-training.pongpisit.workers.dev/)** · **[My worksheet](docs/beginner-worksheet.md)**
+
+## Download first (browser lab kits)
+
+The browser kits include a ready-to-open HTML guide and the materials for **Images**, **Stream**, **R2**, or an **all-labs** bundle. Local instructions and file tools work offline; Dashboard operations and real media delivery still need Internet access. Each is a ZIP file that you extract and open in Edge or Chrome.
+
+**Availability:** ZIPs are not stored in the repository. A maintainer builds them and publishes a tagged release, so they are available only once that release exists. Check the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases). If no release is listed, or it has no kit files, use the hosted guide above. Ask your instructor which release to use.
+
+| Images lab · 35 min | Stream lab · 40 min | R2 lab · 35 min |
+|---|---|---|
+| JPEG + ready-built card/detail page | MP4 + captions + ready-built player page | Document/video + ready-built file comparison |
+| [Find `images-lab.zip` in Releases](https://github.com/pongpisit/cloudflare-media-labs/releases) | [Find `stream-lab.zip` in Releases](https://github.com/pongpisit/cloudflare-media-labs/releases) | [Find `r2-lab.zip` in Releases](https://github.com/pongpisit/cloudflare-media-labs/releases) |
+
+**[Kit contents, privacy and troubleshooting](docs/browser-kits.md)**
+
+**How to use a kit once available:**
+
+1. On the release page, download the ZIP for your lab (`images-lab.zip`, `stream-lab.zip` or `r2-lab.zip`), or `all-labs.zip` for every lab. The release may also list `SHA256SUMS.txt` for an optional integrity check.
+2. In File Explorer, right-click the ZIP and choose **Extract All**. Do not open `START-HERE.html` from inside the ZIP preview.
+3. Open the extracted folder and double-click **START-HERE.html**. It opens in your browser. It does not need a terminal, an installer or a web server.
+
+**Browser tool limits:**
+
+- The tools work locally in your browser, including image dimension checks and SHA-256 file comparison. If your browser blocks a local capability, use the hosted fallback tools. They do not upload your files.
+- **Never enter an API key, signing key, password or R2 secret key.** The tools do not log in to Cloudflare. Connections and selections are cleared when you close or leave the page, or press the clear button. You may optionally paste an actual delivery URL or player URL, but treat it as sensitive: a URL with a bearer or signed token grants access to anyone who has it. Do not share it, screenshot it or save it in Git.
+- A Stream player embedded in a locally opened page can fail Stream's allowed-origin check, so the video may not play there. This is expected. Use the existing [hosted lab guide](https://mahidol-media-training.pongpisit.workers.dev/labs.html) as the fallback.
+
+**Sample files from `main` (individual downloads):** right-click a link and choose **Save link as…**.
+
+- [sample-image.jpg](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-image.jpg)
+- [sample-video.mp4](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-video.mp4)
+- [captions-en.vtt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/captions-en.vtt)
+- [sample-document.txt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-document.txt)
 
 ## Start here
 
@@ -41,6 +73,8 @@ R2 presigning is local SigV4 signing, not a Cloudflare REST endpoint or a Dashbo
 - A blocked step stays **unperformed**; the presentation's labelled simulations explain mechanisms but are not real product evidence.
 
 ## Maintainer tooling
+
+**Browser lab kits.** `npm run package:labs` builds `downloads/images-lab.zip`, `downloads/stream-lab.zip`, `downloads/r2-lab.zip`, `downloads/all-labs.zip` and `downloads/SHA256SUMS.txt`. Each ZIP contains `START-HERE.html` (all-labs uses one folder per lab), generated by the script with inline styles/scripts; generated HTML and ZIPs are not checked in. The shared sources are `browser-labs/lab.js`, `browser-labs/lab.css` and `browser-labs/content.mjs`. To publish, run the manual **lab-kits.yml** workflow (`workflow_dispatch`) and enter the required release **tag** input. Learner links to the Releases page are valid only after a maintainer has done this.
 
 The earlier Node REST/S3 integrations remain in `scripts/`, `tests/` and the pinned package files as optional maintainer tooling. They are not required by participants. `npm test` checks the integration cases, document links, beginner-route constraints, timeboxes and actual caption-file consistency. GitHub Actions also checks documented PowerShell syntax and runs the local REST/S3 helpers and multipart fixture/completion logic with mocked transports on **Windows PowerShell 5.1 and PowerShell 7** (`tests/windows-docs.ps1`). No credentials or cloud mutations are used. These checks do not certify customer account permissions or actual playback.
 

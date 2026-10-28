@@ -26,15 +26,19 @@ In the lab guide, find **Start with sample-only media**. Click each download:
 
 Open **File Explorer → Downloads** and find these files. Keep the original files. You do not need to download a ZIP, open a terminal or install a package.
 
+**Download-first option:** the same samples are available from the repository. Right-click a link and choose **Save link as…**: [sample-image.jpg](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-image.jpg), [sample-video.mp4](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-video.mp4), [captions-en.vtt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/captions-en.vtt), [sample-document.txt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-document.txt).
+
+**Downloadable browser kits (optional):** once a maintainer publishes a release, the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases) will offer `images-lab.zip`, `stream-lab.zip`, `r2-lab.zip` and `all-labs.zip`. Until then, use the hosted lab guide above. With a kit: download the ZIP, right-click it and choose **Extract All**, then double-click **START-HERE.html** in the extracted folder. The kit tools run locally in your browser, including image-size checks and SHA-256 comparison. If your browser blocks a local feature, use the hosted tools. Never enter an API key or secret; pasting an actual delivery or player URL is optional, and a URL with a token is sensitive. A Stream player in a locally opened page can fail the allowed-origin check; if so, use the hosted guide.
+
 **Try it:** open the picture and play the video with sound. The two scenes look different. If the browser adds `(1)` to a filename, that is a duplicate download; choose the file you just saved.
 
 ## 3. Copy your personal lab names
 
 1. In the lab guide, open **Your lab tools → Lab names**.
-2. The page gives you a fresh label, a folder name, an **R2 bucket name** and two image-variant names. Click **Copy** beside the value you need. If copying is blocked, select the field and press **Ctrl+C**.
+2. The page gives you a label, a folder name, an **R2 bucket name** and two image-variant names. Click **Copy** beside the value you need. If copying is blocked, select the field and press **Ctrl+C**.
 3. Paste the values into [your worksheet](beginner-worksheet.md), or a local document. Keep the names for all three labs.
 
-These are ordinary names, not passwords. Refreshing the page creates new names: use the names already written in your worksheet for existing resources.
+These are ordinary names, not passwords. Refreshing the page in the same tab keeps your label. Within that tab, a new label appears only if you click **Hard refresh · generate a new label**; a different tab or browser session may show a different label, so copy your names from the worksheet. Use the names already written in your worksheet for existing resources, and do not generate a new label after you have created resources.
 
 ## 4. Follow the labs in this order
 

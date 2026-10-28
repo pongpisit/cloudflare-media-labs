@@ -4,5 +4,6 @@ node_modules/
 !.env.example
 .lab/
 lab-output/
+downloads/
 .DS_Store
 *.log
