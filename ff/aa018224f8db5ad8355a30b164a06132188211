@@ -1,0 +1,37 @@
+.github/workflows/lab-kits.yml
+  s_5f434bbb853927::t_2be4910a5d89dc 1-64
+.github/workflows/test.yml
+  s_5f434bbb853927::t_c1cf1f53e61e5f 16-23
+README.md
+  s_5f434bbb853927::t_b7806a304892b1 5,11-42,77-78
+browser-labs/lab.js
+  s_5f434bbb853927::t_afb0132845041e 1-113
+docs/browser-kits.md
+  s_5f434bbb853927::t_753d76e98a8e4b 1-52
+package-lock.json
+  s_5f434bbb853927::t_ef87b55d728592 15-17,905-933,1015-1040,1047-1096,1106-1187,1249-1281,1287-1406
+package.json
+  s_5f434bbb853927::t_166416983d644a 6-8,15-17,23-25
+scripts/lab-kits.mjs
+  s_5f434bbb853927::t_64a23bc89f5951 1-93
+tests/browser-kits.mjs
+  s_5f434bbb853927::t_f85b3cbea27eb0 1-73
+tests/browser-labs.test.mjs
+  s_5f434bbb853927::t_ef6c7e5dd29481 1-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ffaa018224f8db5ad8355a30b164a06132188211",
+  "prompts": {},
+  "sessions": {
+    "s_5f434bbb853927": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_efdd56eccffewqqUHqBhIQsL71",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "pongpisit <pongpisit@cloudflare.com>"
+    }
+  }
+}
