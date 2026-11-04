@@ -11,7 +11,7 @@ You need `sample-document.txt`, `sample-video.mp4`, your copied **bucket and fol
 **Do this**
 
 1. In the approved account, open **R2 object storage → Overview** ([shortcut](https://dash.cloudflare.com/?to=/:account/r2/overview)). Select **Create bucket**.
-2. Paste the **Copy your own resource names → R2 bucket name** field on the [R2 lab page](https://pongpisit.github.io/cloudflare-media-labs/r2/) into the name field. Legal names use **3–63 lowercase letters, numbers or hyphens**, with no leading/trailing hyphen. If the name exists, choose another unused legal name and record it.
+2. Paste the **Copy your own resource names → R2 bucket name** field on your R2 lab kit page into the name field. Legal names use **3–63 lowercase letters, numbers or hyphens**, with no leading/trailing hyphen. If the name exists, choose another unused legal name and record it.
 3. Select the **location/jurisdiction approved by the instructor** and **Standard** as the default storage class. Do not choose Infrequent Access for this short-lived lab.
 4. Select **Create bucket**. Open the new bucket and record its exact name, creator and whether it belongs to your group or is a shared fallback.
 5. Open **Settings**. Confirm **Public Development URL / r2.dev** is disabled and no public custom domain is connected. Keep both routes off.
@@ -40,7 +40,7 @@ You need `sample-document.txt`, `sample-video.mp4`, your copied **bucket and fol
 
 1. Select your stored MP4 → **… → Download**.
 2. Find the new copy in **File Explorer → Downloads**. Rename it `video-from-r2.mp4` so it is easy to distinguish from the original `sample-video.mp4`. Keep the original intact.
-3. Open [the R2 lab page](https://pongpisit.github.io/cloudflare-media-labs/r2/) → **Compare original and downloaded file**.
+3. Open your R2 lab kit page (`START-HERE.html` from [the kit](https://github.com/pongpisit/cloudflare-media-labs/releases)) → **Compare original and downloaded file**.
 4. For **Original file**, choose the original `sample-video.mp4` from the sample download.
 5. For **Downloaded file**, choose the new `video-from-r2.mp4` from the actual R2 download.
 6. Tick the confirmation that the second file came from R2. Click **Compare files**.

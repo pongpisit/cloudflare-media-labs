@@ -53,7 +53,7 @@ Confirm an `en` track with `status: ready` independently of video readiness. An 
 
 ## 4. Embed, then require signed access (22–31 min)
 
-Paste only the iframe `src` from your own video's dashboard embed into the **[Stream lab page](https://pongpisit.github.io/cloudflare-media-labs/stream/)**. Load it, click Play and enable English captions. Do not paste raw HTML or API credentials.
+Paste only the iframe `src` from your own video's dashboard embed into the **Stream lab kit page** (`START-HERE.html`). Load it, click Play and enable English captions. Do not paste raw HTML or API credentials.
 
 Click path: **your video's player/embed details → iframe snippet → copy only the value inside `src="..."`**. Open the linked workshop **Lab guide → Live preview**, paste that URL → load → Play → player **CC/subtitles → English**. Check actual sound and all four cues. Under the video's **Settings**, use **Require Signed URLs** if exposed; verify the property with API GET. If allowed origins are configured, have the authorized operator include the preview hostname rather than turning origin policy off.
 
@@ -96,7 +96,7 @@ curl --silent --show-error --output /dev/null --write-out '%{http_code}\n' \
   "https://$STREAM_HOST/$PLAYBACK_TOKEN/manifest/video.m3u8"
 ```
 
-Expected unsigned denial → signed success → expired denial on a new request. Buffered playback continuing is not an expiry test. If allowed origins are restricted, include `pongpisit.github.io` for this preview. Terminal manifest tests may also need the approved origin as a `Referer` header; diagnose that gate separately rather than disabling policy. Signed access is not university authentication.
+Expected unsigned denial → signed success → expired denial on a new request. Buffered playback continuing is not an expiry test. If allowed origins are restricted, a locally opened kit page cannot satisfy them; check playback in the Dashboard player instead. Terminal manifest tests may also need the approved origin as a `Referer` header; diagnose that gate separately rather than disabling policy. Signed access is not university authentication.
 
 ## 6. Record and delete the owned video (38–40 min)
 
@@ -155,7 +155,7 @@ Wait/recheck until `en` is ready. Player → **CC → English** → verify first
 
 ### D. Verify public embed, then require signed playback
 
-Use the Dashboard's actual iframe source in the [Stream lab page](https://pongpisit.github.io/cloudflare-media-labs/stream/) first. Then:
+Use the Dashboard's actual iframe source in the Stream lab kit page first. Then:
 
 ```powershell
 $protectedVideo = Invoke-CfApi -Method POST -Path "/stream/$env:CF_VIDEO_UID" -Body @{
@@ -184,8 +184,8 @@ $playbackToken = [string]$tokenResponse.result.token
 if (-not $playbackToken) { throw 'No playback token returned.' }
 
 $statusArgs = @('--silent', '--show-error', '--output', 'NUL', '--write-out', '%{http_code}\n')
-# For a restricted-origin video, use its already-approved preview origin.
-# $statusArgs += @('--header', 'Referer: https://pongpisit.github.io/')
+# For a restricted-origin video, set Referer to one of its approved allowed origins.
+# $statusArgs += @('--header', 'Referer: https://ALLOWED-ORIGIN.example/')
 curl.exe @statusArgs "https://$streamHost/$env:CF_VIDEO_UID/manifest/video.m3u8"
 curl.exe @statusArgs "https://$streamHost/$playbackToken/manifest/video.m3u8"
 Start-Sleep -Seconds 65

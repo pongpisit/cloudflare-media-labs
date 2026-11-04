@@ -21,9 +21,7 @@ export const labs = {
     ['Clean up', 'Delete only your recorded files and owned folder marker. Delete your personally created bucket only when completely empty. Never use Empty Bucket on shared storage. Clear file selections and any temporary link.']
   ] }
 };
-export const site = 'https://pongpisit.github.io/cloudflare-media-labs/';
 export const repo = 'https://github.com/pongpisit/cloudflare-media-labs';
-export const hosted = site;
 export const workshop = 'https://mahidol-media-training.pongpisit.workers.dev/';
 export const labWords = {"verbs":["amble","bask","blaze","bloom","bounce","breeze","build","camp","carry","chase","chirp","climb","coast","dance","dash","dive","drift","dream","echo","explore","float","flow","flutter","forge","gather","glide","glow","grow","guide","hike","hover","hum","imagine","jump","kindle","laugh","leap","listen","loop","march","orbit","paint","paddle","pause","pilot","play","ponder","roam","sail","skip","sketch","sprint","stroll","swim","wander","weave"],"nouns":["acorn","amber","aurora","badger","bamboo","beacon","berry","brook","cabin","canyon","comet","coral","creek","crystal","delta","dove","dream","dune","echo","ember","fern","finch","fjord","forest","galaxy","garden","glacier","harbor","hazel","island","jade","lagoon","lantern","leaf","lilac","lotus","maple","meadow","meteor","mist","moon","moss","nebula","ocean","otter","pebble","pine","planet","pollen","prism","quartz","river","robin","sage","shell","sparrow","spring","star","stone","summit","tide","valley","willow","wind","wren"]};
 export const sources = {

@@ -5,7 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { buildKits, buildSite, labEntries, renderLab, root, zipNames } from '../scripts/lab-kits.mjs';
+import { buildKits, labEntries, renderLab, root, zipNames } from '../scripts/lab-kits.mjs';
 import { generateLabel, hashFile, imageURL, imageVariants, labNames, presignedGET, streamURL, validLabel } from '../browser-labs/lab.js';
 import { labWords, labs } from '../browser-labs/content.mjs';
 
@@ -79,22 +79,6 @@ test('entry listing is deterministic and sample bytes are copied unchanged', asy
   for (const name of first) assert.deepEqual(await readFile(path.join(a,name)),await readFile(path.join(b,name)),`${name} must be byte-deterministic`);
 });
 
-test('hosted lab site has a landing page, three lab pages and sample files with working relative links', async () => {
-  const output = await buildSite(await mkdtemp(path.join(tmpdir(), 'lab-site-')));
-  assert.deepEqual((await readdir(output)).sort(), ['.nojekyll', 'images', 'index.html', 'r2', 'samples', 'stream']);
-  const index = await readFile(path.join(output, 'index.html'), 'utf8');
-  for (const id of Object.keys(labs)) {
-    assert.match(index, new RegExp(`href="${id}/"`));
-    const html = await readFile(path.join(output, id, 'index.html'), 'utf8');
-    assert.match(html, /href="\.\.\/"/);
-    for (const [, href] of html.matchAll(/(?:href|src)="(\.\.\/samples\/[^"]+)"/g)) assert.ok(await readFile(path.join(output, id, href)), `${id}: ${href}`);
-    assert.doesNotMatch(html, /(?:href|src)="samples\//, `${id}: hosted pages must use ../samples`);
-    assert.doesNotMatch(html, /type=["']password["']|fetch\(|XMLHttpRequest/);
-  }
-  for (const name of ['sample-image.jpg', 'sample-video.mp4', 'captions-en.vtt', 'sample-document.txt', 'video-poster.jpg']) assert.deepEqual(await readFile(path.join(output, 'samples', name)), await readFile(path.join(root, 'samples', name)));
-  assert.match(await readFile(path.join(output, 'stream/index.html'), 'utf8'), /pongpisit\.github\.io/);
-});
-
 test('lab labels and names follow the legal bucket and variant rules', () => {
   assert.deepEqual(labNames('class-pair07'), { folder: 'class-pair07', bucket: 'class-pair07-bucket', card: 'class-pair07-card', detail: 'class-pair07-detail' });
   for (const bad of ['', 'ab', '-abc', 'UPPER', 'a b', 'a'.repeat(45)]) assert.throws(() => labNames(bad));
@@ -106,15 +90,12 @@ test('lab labels and names follow the legal bucket and variant rules', () => {
 
 test('markdown guides and generated lab pages agree on the numbers learners must hit', async () => {
   const images = await readFile(path.join(root, 'docs/beginner-images.md'), 'utf8');
-  const html = await renderLab('images', { site: true });
+  const html = await renderLab('images');
   for (const fact of ['320', '1280', '720', '180', '960', 'Cover', 'Scale down']) {
     assert.ok(images.includes(fact), `guide lacks ${fact}`);
     assert.ok(html.includes(fact), `lab page lacks ${fact}`);
   }
-  assert.match(await readFile(path.join(root, 'docs/beginner-images.md'), 'utf8'), /pongpisit\.github\.io\/cloudflare-media-labs\/images\//);
-  assert.match(await readFile(path.join(root, 'docs/beginner-r2.md'), 'utf8'), /pongpisit\.github\.io\/cloudflare-media-labs\/r2\//);
-  assert.match(await readFile(path.join(root, 'docs/beginner-stream.md'), 'utf8'), /pongpisit\.github\.io\/cloudflare-media-labs\/stream\//);
   for (const file of ['README.md', 'docs/beginner-start.md', 'docs/beginner-images.md', 'docs/beginner-stream.md', 'docs/beginner-r2.md', 'docs/browser-kits.md']) {
-    assert.doesNotMatch(await readFile(path.join(root, file), 'utf8'), /workers\.dev\/labs\.html|Your lab tools/, `${file} still points at the retired Worker lab reader`);
+    assert.doesNotMatch(await readFile(path.join(root, file), 'utf8'), /workers\.dev\/labs\.html|Your lab tools|github\.io/, `${file} still points at the retired Worker lab reader`);
   }
 });

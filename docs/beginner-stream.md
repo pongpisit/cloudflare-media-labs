@@ -39,7 +39,7 @@ You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label and [works
 
 1. Ask your partner to replay the clip in the Dashboard and check the first and last captions. This is enough to complete the core playback check.
 2. For an embed demonstration, open the video's **Player/Embed** details. If it gives a ready-to-open player link, open that link.
-3. If it gives an iframe snippet instead, the instructor helps copy only the address between `src="` and the next `"`. Paste that address into the [Stream lab page](https://pongpisit.github.io/cloudflare-media-labs/stream/). Click **Load preview → Play**, then enable **English** captions.
+3. If it gives an iframe snippet instead, the instructor helps copy only the address between `src="` and the next `"`. Paste that address into your Stream lab kit page (`START-HERE.html`) under **Open your actual Stream player**. Click **Load your player**, press **Play**, then enable **English** captions. A restricted video may refuse to play outside its allowed origins; then use the Dashboard player.
 
 **You should see:** the same clip and captions in the player. Do not paste the entire HTML snippet or an API key into the preview. The instructor prepares allowed-origin settings if needed; do not turn off access policies to make an embed work.
 

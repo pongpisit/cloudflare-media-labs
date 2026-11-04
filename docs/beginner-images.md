@@ -45,7 +45,7 @@ Have [the start guide](beginner-start.md) and [worksheet](beginner-worksheet.md)
 
 **Do this**
 
-1. Open [the Images lab page](https://pongpisit.github.io/cloudflare-media-labs/images/) → **Show your actual card and detail images**.
+1. Open your Images lab kit page (`START-HERE.html` from [the kit](https://github.com/pongpisit/cloudflare-media-labs/releases)) → **Show your actual card and detail images**.
 2. Paste the actual public `imagedelivery.net` URL from your image record. Paste your card and detail variant names into the matching fields. Click **Load real images**.
 3. Check the two pictures that load, then use **Open actual card image** and **Open actual detail image**. The tool only changes the last name in the URL; you must already have saved the variants in Cloudflare.
 4. Compare the pictures. Which top/bottom edge markers disappear from the card? Does the detail view retain the whole source?

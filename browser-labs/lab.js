@@ -39,7 +39,7 @@ export function generateLabel(words, random = () => crypto.getRandomValues(new U
   return `${words.verbs[random() % words.verbs.length]}-${words.nouns[random() % words.nouns.length]}`;
 }
 export async function hashFile(file) {
-  if (!globalThis.crypto?.subtle) throw new Error('This browser does not support local SHA-256 here. Use the hosted lab tools in a supported browser.');
+  if (!globalThis.crypto?.subtle) throw new Error('This browser does not support local SHA-256 here. Use a current Edge or Chrome, and open the page from the extracted folder.');
   const bytes = await file.arrayBuffer();
   const digest = await crypto.subtle.digest('SHA-256', bytes);
   return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2,'0')).join('');
@@ -128,7 +128,7 @@ if (typeof document !== 'undefined') {
       const url = streamURL($('#stream-url').value), frame = document.createElement('iframe');
       frame.title = 'Your actual Stream video'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.allow = 'accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture'; frame.allowFullscreen = true; frame.src = url;
       $('#player').append(frame);
-      status('#connection-status','Player requested—not playback verified. Press Play, listen, and select English captions. If blocked from a local file, use the hosted preview and instructor-approved allowed origins.');
+      status('#connection-status','Player requested—not playback verified. Press Play, listen, and select English captions. A restricted video may refuse to play from a local file; check playback in the Dashboard player instead.');
     } catch (error) { status('#connection-status', error.message, 'error'); }
   });
   $('#r2-form')?.addEventListener('submit', event => {

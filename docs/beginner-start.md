@@ -6,7 +6,7 @@ You do not need to write code. Keep this guide in one browser tab and Cloudflare
 
 ## 1. Open your two working tabs
 
-1. Open the [lab pages](https://pongpisit.github.io/cloudflare-media-labs/) for your lab. Each page has the steps, samples and checking tools.
+1. Open the [lab kit page](https://github.com/pongpisit/cloudflare-media-labs/releases) and download the ZIP for your lab (or `all-labs.zip`). Extract it, then double-click **START-HERE.html**. The page has the steps, samples and checking tools. If no kit is published yet, follow the written guide for your lab and use the individual downloads below.
 2. Open [Cloudflare Dashboard](https://dash.cloudflare.com/) in a second tab. Sign in, then select the account named by your instructor.
 3. Keep both tabs open. Return to this guide after each Dashboard step.
 4. In Dashboard **Search** (**Ctrl+K**, Mac: **Command+K**), select **Copy account ID** and record it in your local worksheet. Read [First-time setup](beginner-setup.md) for product-access checks and the scoped API-token walkthrough. An authorized operator creates credentials; browser lab participants need none.
@@ -15,7 +15,7 @@ You do not need to write code. Keep this guide in one browser tab and Cloudflare
 
 ## 2. Download the four sample files
 
-On each lab page, find **Ready-to-use materials**, or use [all samples](https://pongpisit.github.io/cloudflare-media-labs/#samples). Click each download:
+The lab kit already contains the samples for its lab (in its `samples` folder). To download them one by one instead, use these links. Click each download:
 
 | Download | What it is | Used in |
 |---|---|---|
@@ -28,13 +28,13 @@ Open **File Explorer → Downloads** and find these files. Keep the original fil
 
 **Download-first option:** the same samples are available from the repository. Right-click a link and choose **Save link as…**: [sample-image.jpg](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-image.jpg), [sample-video.mp4](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-video.mp4), [captions-en.vtt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/captions-en.vtt), [sample-document.txt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-document.txt).
 
-**Downloadable browser kits (optional):** once a maintainer publishes a release, the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases) will offer `images-lab.zip`, `stream-lab.zip`, `r2-lab.zip` and `all-labs.zip`. Until then, use the hosted lab guide above. With a kit: download the ZIP, right-click it and choose **Extract All**, then double-click **START-HERE.html** in the extracted folder. The kit tools run locally in your browser, including image-size checks and SHA-256 comparison. If your browser blocks a local feature, use the hosted tools. Never enter an API key or secret; pasting an actual delivery or player URL is optional, and a URL with a token is sensitive. A Stream player in a locally opened page can fail the allowed-origin check; if so, use the hosted guide.
+**Downloadable browser kits (optional):** once a maintainer publishes a release, the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases) will offer `images-lab.zip`, `stream-lab.zip`, `r2-lab.zip` and `all-labs.zip`. Until then, use the written guides. With a kit: download the ZIP, right-click it and choose **Extract All**, then double-click **START-HERE.html** in the extracted folder. The kit tools run locally in your browser, including image-size checks and SHA-256 comparison. Never enter an API key or secret; pasting an actual delivery or player URL is optional, and a URL with a token is sensitive. A Stream player in a locally opened page can fail the allowed-origin check; if so, check playback in the Dashboard player instead.
 
 **Try it:** open the picture and play the video with sound. The two scenes look different. If the browser adds `(1)` to a filename, that is a duplicate download; choose the file you just saved.
 
 ## 3. Copy your personal lab names
 
-1. At the bottom of any lab page, find **Copy your own resource names**.
+1. At the bottom of your lab kit page, find **Copy your own resource names**.
 2. The page gives you a label, a folder name, an **R2 bucket name** and two image-variant names. Click **Copy** beside the value you need. If copying is blocked, select the field and press **Ctrl+C**.
 3. Paste the values into [your worksheet](beginner-worksheet.md), or a local document. Keep the names for all three labs.
 

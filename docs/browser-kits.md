@@ -1,6 +1,6 @@
 # Downloadable browser lab kits
 
-Each release kit has a ready-to-open `START-HERE.html`, instructions, synthetic materials and local verification tools. No learner installation or management credentials are required. The hosted lab pages (GitHub Pages) and beginner Markdown route use the same content and remain available.
+Each release kit has a ready-to-open `START-HERE.html`, instructions, synthetic materials and local verification tools. No learner installation or management credentials are required. The beginner Markdown guides cover the same labs and remain available.
 
 ## Learner workflow
 
@@ -23,9 +23,9 @@ Each release kit has a ready-to-open `START-HERE.html`, instructions, synthetic 
 - URLs containing signed capabilities are sensitive. They are not stored by these pages or written into exports, but actual media requests transmit them to the delivery service. Opening links may leave them in browser history; do not use a shared device or save signed URLs in screenshots, bookmarks or Git.
 - Use the supplied samples and approved sandbox only. Product usage can incur charges. Creation and cleanup remain manual, limited to recorded owned resources.
 - The page does not authenticate users, verify signatures or determine whether a URL permits GET. Its URL checks validate only expected service shapes. Actual permissions, expiry, playback and downloads must be tested separately.
-- Local file origins may not satisfy Stream allowed-origin policies. Use the [hosted lab page](https://pongpisit.github.io/cloudflare-media-labs/stream/) rather than disabling access controls; the instructor allows `pongpisit.github.io` in the video's allowed origins.
+- A page opened from a file has no web address that a video's allowed-origins list can name, so a restricted video may refuse to play there. Do not disable access policies; check playback in the Dashboard player.
 - The Images tool supports the ordinary `imagedelivery.net/<hash>/<id>/<variant>` route. Custom image IDs/hostnames are an instructor extension. Full signed URLs are used unchanged.
-- SHA-256 uses the browser Web Crypto API. If unsupported or blocked locally, use the hosted tools. The comparison limit is 100 MiB per file. Selecting the same original twice cannot prove an R2 download.
+- SHA-256 uses the browser Web Crypto API. If unsupported or blocked, use a current Edge or Chrome and open the page from the extracted folder. The comparison limit is 100 MiB per file. Selecting the same original twice cannot prove an R2 download.
 - All lab content/styles/scripts are bundled in the HTML. Materials are separate files beside it. Local instructions/file tools work offline, but Dashboard and actual media access need Internet connectivity.
 
 ## Build and publish (maintainers)
@@ -51,8 +51,8 @@ Push reviewed source changes, then run **Publish browser lab kits** in GitHub Ac
 - `npm audit` reports zero known vulnerabilities with pinned Puppeteer Core 25.16.0.
 - These are offline/browser/package checks—not actual product upload, live signed playback, Windows browser rehearsal or a claim that a GitHub release has been published.
 
-## Hosted lab pages (GitHub Pages)
+## Where things live
 
-The same pages are published at <https://pongpisit.github.io/cloudflare-media-labs/> by `.github/workflows/pages.yml` whenever `browser-labs/`, `samples/` or the page builder change on `main`. `npm run build:site` produces the identical site locally in ignored `site/`. One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-
-Hosted pages are the recommended route for the Stream player: a page served over HTTPS has a stable origin (`https://pongpisit.github.io`) that the instructor can add to the video's allowed origins. A page opened from a ZIP has no such origin. The workshop slides (Cloudflare Worker) only teach and link here; they no longer carry lab steps or tools.
+- **Workshop slides** — a Cloudflare Worker. Teaching only; its lab slides link here.
+- **This repository** — the written guides in `docs/`, the samples in `samples/`, the glossary in `docs/glossary.md`, and the kit sources in `browser-labs/`.
+- **Releases** — the ZIP kits learners download. There is no separate hosted lab site.
