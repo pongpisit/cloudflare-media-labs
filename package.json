@@ -15,7 +15,8 @@
     "package:labs": "node scripts/lab-kits.mjs",
     "build:site": "node scripts/lab-kits.mjs site",
     "test": "node --test tests/*.test.mjs",
-    "test:browser": "node tests/browser-kits.mjs"
+    "test:browser": "node tests/browser-kits.mjs",
+    "smoke:pages": "node scripts/smoke-pages.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1146.0",
