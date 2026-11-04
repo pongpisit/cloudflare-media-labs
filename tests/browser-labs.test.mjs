@@ -103,3 +103,18 @@ test('lab labels and names follow the legal bucket and variant rules', () => {
   for (let i = 0; i < 200; i++) { const generated = generateLabel(labWords); assert.ok(validLabel(generated)); assert.ok(labNames(generated).bucket.length <= 63); }
   assert.ok(labWords.verbs.length > 40 && labWords.nouns.length > 40);
 });
+
+test('markdown guides and generated lab pages agree on the numbers learners must hit', async () => {
+  const images = await readFile(path.join(root, 'docs/beginner-images.md'), 'utf8');
+  const html = await renderLab('images', { site: true });
+  for (const fact of ['320', '1280', '720', '180', '960', 'Cover', 'Scale down']) {
+    assert.ok(images.includes(fact), `guide lacks ${fact}`);
+    assert.ok(html.includes(fact), `lab page lacks ${fact}`);
+  }
+  assert.match(await readFile(path.join(root, 'docs/beginner-images.md'), 'utf8'), /pongpisit\.github\.io\/cloudflare-media-labs\/images\//);
+  assert.match(await readFile(path.join(root, 'docs/beginner-r2.md'), 'utf8'), /pongpisit\.github\.io\/cloudflare-media-labs\/r2\//);
+  assert.match(await readFile(path.join(root, 'docs/beginner-stream.md'), 'utf8'), /pongpisit\.github\.io\/cloudflare-media-labs\/stream\//);
+  for (const file of ['README.md', 'docs/beginner-start.md', 'docs/beginner-images.md', 'docs/beginner-stream.md', 'docs/beginner-r2.md', 'docs/browser-kits.md']) {
+    assert.doesNotMatch(await readFile(path.join(root, file), 'utf8'), /workers\.dev\/labs\.html|Your lab tools/, `${file} still points at the retired Worker lab reader`);
+  }
+});
