@@ -6,13 +6,15 @@ Beginner-friendly Images, Stream and R2 labs for people who publish media rather
 
 ### [Start here — the beginner guide →](docs/beginner-start.md)
 
-**[Lab guide and local tools](https://mahidol-media-training.pongpisit.workers.dev/labs.html)** · **[Interactive presentation](https://mahidol-media-training.pongpisit.workers.dev/)** · **[My worksheet](docs/beginner-worksheet.md)**
+**[Lab pages](https://pongpisit.github.io/cloudflare-media-labs/)** — steps, samples and checking tools · **[Workshop slides](https://mahidol-media-training.pongpisit.workers.dev/)** — the training deck · **[My worksheet](docs/beginner-worksheet.md)**
+
+> **How the pieces fit:** the *slides* teach the ideas; this *repository* holds everything you practise with (guides, samples, tools, downloads). Nothing in the labs needs the slides open.
 
 ## Download first (browser lab kits)
 
 The browser kits include a ready-to-open HTML guide and the materials for **Images**, **Stream**, **R2**, or an **all-labs** bundle. Local instructions and file tools work offline; Dashboard operations and real media delivery still need Internet access. Each is a ZIP file that you extract and open in Edge or Chrome.
 
-**Availability:** ZIPs are not stored in the repository. A maintainer builds them and publishes a tagged release, so they are available only once that release exists. Check the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases). If no release is listed, or it has no kit files, use the hosted guide above. Ask your instructor which release to use.
+**Availability:** ZIPs are not stored in the repository. A maintainer builds them and publishes a tagged release, so they are available only once that release exists. Check the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases). If no release is listed, or it has no kit files, use the hosted lab pages above. Ask your instructor which release to use.
 
 | Images lab · 35 min | Stream lab · 40 min | R2 lab · 35 min |
 |---|---|---|
@@ -31,7 +33,7 @@ The browser kits include a ready-to-open HTML guide and the materials for **Imag
 
 - The tools work locally in your browser, including image dimension checks and SHA-256 file comparison. If your browser blocks a local capability, use the hosted fallback tools. They do not upload your files.
 - **Never enter an API key, signing key, password or R2 secret key.** The tools do not log in to Cloudflare. Connections and selections are cleared when you close or leave the page, or press the clear button. You may optionally paste an actual delivery URL or player URL, but treat it as sensitive: a URL with a bearer or signed token grants access to anyone who has it. Do not share it, screenshot it or save it in Git.
-- A Stream player embedded in a locally opened page can fail Stream's allowed-origin check, so the video may not play there. This is expected. Use the existing [hosted lab guide](https://mahidol-media-training.pongpisit.workers.dev/labs.html) as the fallback.
+- A Stream player embedded in a locally opened page can fail Stream's allowed-origin check, so the video may not play there. This is expected. Use the [hosted lab page](https://pongpisit.github.io/cloudflare-media-labs/) instead; your instructor allows `pongpisit.github.io` in the video's allowed origins.
 
 **Sample files from `main` (individual downloads):** right-click a link and choose **Save link as…**.
 
@@ -43,7 +45,7 @@ The browser kits include a ready-to-open HTML guide and the materials for **Imag
 ## Start here
 
 1. Select the approved account and follow [First-time setup](docs/beginner-setup.md): Account ID, product access and scoped API credentials for authorized operators.
-2. Open [the lab guide](https://mahidol-media-training.pongpisit.workers.dev/labs.html), download the four samples, and copy your folder, bucket and variant names from **Your lab tools**.
+2. Open the [lab pages](https://pongpisit.github.io/cloudflare-media-labs/), download the samples, and copy your folder, bucket and variant names from **Copy your own resource names** at the bottom of any lab page.
 3. Follow these guides in order. Work with a partner and record the actual results in [your worksheet](docs/beginner-worksheet.md).
 
 | Lab | What you do | What you should show | Budget |

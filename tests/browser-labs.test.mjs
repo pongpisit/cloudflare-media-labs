@@ -5,9 +5,9 @@ import path from 'node:path';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { buildKits, labEntries, renderLab, root, zipNames } from '../scripts/lab-kits.mjs';
-import { hashFile, imageURL, imageVariants, presignedGET, streamURL } from '../browser-labs/lab.js';
-import { labs } from '../browser-labs/content.mjs';
+import { buildKits, buildSite, labEntries, renderLab, root, zipNames } from '../scripts/lab-kits.mjs';
+import { generateLabel, hashFile, imageURL, imageVariants, labNames, presignedGET, streamURL, validLabel } from '../browser-labs/lab.js';
+import { labWords, labs } from '../browser-labs/content.mjs';
 
 test('learner kits contain the required local materials and no maintainer files or secrets', async () => {
   const output = await mkdtemp(path.join(tmpdir(), 'lab-kits-'));
@@ -30,7 +30,8 @@ test('generated pages are self-contained, not credential forms, and label unconn
   for (const id of Object.keys(labs)) {
     const html = await renderLab(id);
     assert.doesNotMatch(html, /img-src[^;]*\bhttps:(?!\/\/imagedelivery)/);
-    assert.doesNotMatch(html, /<script[^>]+src=|<link[^>]+href=["']https?:|fetch\(|XMLHttpRequest|localStorage|sessionStorage|Authorization|X-Auth|Bearer/i);
+    assert.doesNotMatch(html, /<script[^>]+src=|<link[^>]+href=["']https?:|fetch\(|XMLHttpRequest|localStorage|Authorization|X-Auth|Bearer/i);
+    assert.deepEqual([...html.matchAll(/sessionStorage\.(?:get|set)Item\(([^,)]+)/g)].map(match => match[1]).filter(key => key !== 'labelKey'), [], 'only the non-secret lab label may use session storage');
     assert.doesNotMatch(html, /type=["']password["']|name=["'](?:token|api|secret)/i);
     assert.match(html, /Not connected yet/);
     assert.match(html, /never needs a Cloudflare API token, signing key or R2 secret key/);
@@ -76,4 +77,29 @@ test('entry listing is deterministic and sample bytes are copied unchanged', asy
   const first = await buildKits(a), second = await buildKits(b);
   assert.deepEqual(first, second);
   for (const name of first) assert.deepEqual(await readFile(path.join(a,name)),await readFile(path.join(b,name)),`${name} must be byte-deterministic`);
+});
+
+test('hosted lab site has a landing page, three lab pages and sample files with working relative links', async () => {
+  const output = await buildSite(await mkdtemp(path.join(tmpdir(), 'lab-site-')));
+  assert.deepEqual((await readdir(output)).sort(), ['.nojekyll', 'images', 'index.html', 'r2', 'samples', 'stream']);
+  const index = await readFile(path.join(output, 'index.html'), 'utf8');
+  for (const id of Object.keys(labs)) {
+    assert.match(index, new RegExp(`href="${id}/"`));
+    const html = await readFile(path.join(output, id, 'index.html'), 'utf8');
+    assert.match(html, /href="\.\.\/"/);
+    for (const [, href] of html.matchAll(/(?:href|src)="(\.\.\/samples\/[^"]+)"/g)) assert.ok(await readFile(path.join(output, id, href)), `${id}: ${href}`);
+    assert.doesNotMatch(html, /(?:href|src)="samples\//, `${id}: hosted pages must use ../samples`);
+    assert.doesNotMatch(html, /type=["']password["']|fetch\(|XMLHttpRequest/);
+  }
+  for (const name of ['sample-image.jpg', 'sample-video.mp4', 'captions-en.vtt', 'sample-document.txt', 'video-poster.jpg']) assert.deepEqual(await readFile(path.join(output, 'samples', name)), await readFile(path.join(root, 'samples', name)));
+  assert.match(await readFile(path.join(output, 'stream/index.html'), 'utf8'), /pongpisit\.github\.io/);
+});
+
+test('lab labels and names follow the legal bucket and variant rules', () => {
+  assert.deepEqual(labNames('class-pair07'), { folder: 'class-pair07', bucket: 'class-pair07-bucket', card: 'class-pair07-card', detail: 'class-pair07-detail' });
+  for (const bad of ['', 'ab', '-abc', 'UPPER', 'a b', 'a'.repeat(45)]) assert.throws(() => labNames(bad));
+  const label = generateLabel(labWords, (() => { let n = 0; return () => n++; })());
+  assert.ok(validLabel(label));
+  for (let i = 0; i < 200; i++) { const generated = generateLabel(labWords); assert.ok(validLabel(generated)); assert.ok(labNames(generated).bucket.length <= 63); }
+  assert.ok(labWords.verbs.length > 40 && labWords.nouns.length > 40);
 });

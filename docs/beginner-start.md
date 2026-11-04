@@ -6,7 +6,7 @@ You do not need to write code. Keep this guide in one browser tab and Cloudflare
 
 ## 1. Open your two working tabs
 
-1. Open [the lab guide and tools](https://mahidol-media-training.pongpisit.workers.dev/labs.html).
+1. Open the [lab pages](https://pongpisit.github.io/cloudflare-media-labs/) for your lab. Each page has the steps, samples and checking tools.
 2. Open [Cloudflare Dashboard](https://dash.cloudflare.com/) in a second tab. Sign in, then select the account named by your instructor.
 3. Keep both tabs open. Return to this guide after each Dashboard step.
 4. In Dashboard **Search** (**Ctrl+K**, Mac: **Command+K**), select **Copy account ID** and record it in your local worksheet. Read [First-time setup](beginner-setup.md) for product-access checks and the scoped API-token walkthrough. An authorized operator creates credentials; browser lab participants need none.
@@ -15,7 +15,7 @@ You do not need to write code. Keep this guide in one browser tab and Cloudflare
 
 ## 2. Download the four sample files
 
-In the lab guide, find **Start with sample-only media**. Click each download:
+On each lab page, find **Ready-to-use materials**, or use [all samples](https://pongpisit.github.io/cloudflare-media-labs/#samples). Click each download:
 
 | Download | What it is | Used in |
 |---|---|---|
@@ -34,11 +34,11 @@ Open **File Explorer → Downloads** and find these files. Keep the original fil
 
 ## 3. Copy your personal lab names
 
-1. In the lab guide, open **Your lab tools → Lab names**.
+1. At the bottom of any lab page, find **Copy your own resource names**.
 2. The page gives you a label, a folder name, an **R2 bucket name** and two image-variant names. Click **Copy** beside the value you need. If copying is blocked, select the field and press **Ctrl+C**.
 3. Paste the values into [your worksheet](beginner-worksheet.md), or a local document. Keep the names for all three labs.
 
-These are ordinary names, not passwords. Refreshing the page in the same tab keeps your label. Within that tab, a new label appears only if you click **Hard refresh · generate a new label**; a different tab or browser session may show a different label, so copy your names from the worksheet. Use the names already written in your worksheet for existing resources, and do not generate a new label after you have created resources.
+These are ordinary names, not passwords. Refreshing the page in the same tab keeps your label. Within that tab, a new label appears only if you click **Generate a new label**; a different tab or browser session may show a different label, so copy your names from the worksheet. Use the names already written in your worksheet for existing resources, and do not generate a new label after you have created resources.
 
 ## 4. Follow the labs in this order
 
@@ -58,4 +58,4 @@ Each guide has **Do this**, **You should see**, **If it does not work**, and **C
 
 **Ready?** Open [Lab 1 — Images](beginner-images.md).
 
-If a term is unfamiliar, use the [product glossary](https://mahidol-media-training.pongpisit.workers.dev/labs.html#product-fundamentals-glossary). You do not need to memorize it before starting.
+If a term is unfamiliar, use the [product glossary](glossary.md). You do not need to memorize it before starting.

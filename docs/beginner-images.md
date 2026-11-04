@@ -45,12 +45,12 @@ Have [the start guide](beginner-start.md) and [worksheet](beginner-worksheet.md)
 
 **Do this**
 
-1. Open [Your lab tools](https://mahidol-media-training.pongpisit.workers.dev/labs.html#lab-helpers) → **Image links**.
-2. Paste the actual public `imagedelivery.net` URL from your image record. Paste your card and detail variant names into the matching fields. Click **Build image links**.
-3. Open **Card image**, then **Detail image** in their new tabs. The tool only changes the last name in the URL; you must already have saved the variants in Cloudflare.
+1. Open [the Images lab page](https://pongpisit.github.io/cloudflare-media-labs/images/) → **Show your actual card and detail images**.
+2. Paste the actual public `imagedelivery.net` URL from your image record. Paste your card and detail variant names into the matching fields. Click **Load real images**.
+3. Check the two pictures that load, then use **Open actual card image** and **Open actual detail image**. The tool only changes the last name in the URL; you must already have saved the variants in Cloudflare.
 4. Compare the pictures. Which top/bottom edge markers disappear from the card? Does the detail view retain the whole source?
 5. Right-click the card image → **Save image as**. Save it as `card-result` in Downloads. Do the same for the detail as `detail-result`. Keep the extension offered by the browser; delivery format can differ from the original JPEG.
-6. In **Your lab tools → Image dimensions**, choose the downloaded card file, then click **Read dimensions**. Record the result. Repeat with the downloaded detail file.
+6. On the same page, under **Read image dimensions**, choose the downloaded card file, then click **Read dimensions**. Record the result. Repeat with the downloaded detail file.
 
 **You should see:**
 

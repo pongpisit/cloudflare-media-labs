@@ -30,6 +30,14 @@ export function presignedGET(value) {
   if (url.searchParams.get('X-Amz-Algorithm') !== 'AWS4-HMAC-SHA256') throw new Error('Unsupported signing algorithm.');
   return url.href;
 }
+export const validLabel = value => /^[a-z0-9][a-z0-9-]{2,43}$/.test(value);
+export function labNames(label) {
+  if (!validLabel(label)) throw new Error('Use 3–44 lowercase letters, numbers or hyphens, starting with a letter or number.');
+  return { folder: label, bucket: `${label}-bucket`, card: `${label}-card`, detail: `${label}-detail` };
+}
+export function generateLabel(words, random = () => crypto.getRandomValues(new Uint32Array(1))[0]) {
+  return `${words.verbs[random() % words.verbs.length]}-${words.nouns[random() % words.nouns.length]}`;
+}
 export async function hashFile(file) {
   if (!globalThis.crypto?.subtle) throw new Error('This browser does not support local SHA-256 here. Use the hosted lab tools in a supported browser.');
   const bytes = await file.arrayBuffer();
@@ -43,13 +51,44 @@ if (typeof document !== 'undefined') {
   let generation = 0;
   const clear = () => {
     generation++;
-    document.querySelectorAll('input').forEach(input => { if (input.type === 'checkbox') input.checked = false; else input.value = ''; });
+    document.querySelectorAll('input:not([data-keep])').forEach(input => { if (input.type === 'checkbox') input.checked = false; else input.value = ''; });
     document.querySelectorAll('[data-real-image]').forEach(image => { image.removeAttribute('src'); image.hidden = true; });
     document.querySelectorAll('[data-real-link]').forEach(link => { link.removeAttribute('href'); link.hidden = true; });
     $('#player')?.replaceChildren();
-    document.querySelectorAll('[data-status]').forEach(node => { node.textContent = node.dataset.initial; node.dataset.state = ''; });
+    document.querySelectorAll('[data-status]').forEach(node => { if (node.dataset.initial) { node.textContent = node.dataset.initial; node.dataset.state = ''; } });
     document.querySelectorAll('video').forEach(video => video.pause());
   };
+  const labelKey = 'media-labs:lab-label:v1';
+  const labelInput = $('#lab-label');
+  if (labelInput) {
+    const words = JSON.parse($('#lab-words').textContent);
+    const update = (message = '') => {
+      try {
+        const names = labNames(labelInput.value.trim());
+        for (const [key, value] of Object.entries(names)) $(`#name-${key}`).value = value;
+        status('#names-status', message || 'Saved for this tab. Copy these names before creating resources. They are not passwords.', 'success');
+      } catch (error) {
+        for (const key of ['folder', 'bucket', 'card', 'detail']) $(`#name-${key}`).value = '';
+        status('#names-status', error.message, 'error');
+      }
+    };
+    let saved = '';
+    try { saved = sessionStorage.getItem(labelKey) || ''; } catch {}
+    labelInput.value = validLabel(saved) ? saved : generateLabel(words);
+    try { sessionStorage.setItem(labelKey, labelInput.value); } catch {}
+    update();
+    labelInput.addEventListener('input', () => { const value = labelInput.value.trim(); if (validLabel(value)) { try { sessionStorage.setItem(labelKey, value); } catch {} } update(); });
+    $('#regen-label').addEventListener('click', () => {
+      let next = generateLabel(words); while (next === labelInput.value.trim()) next = generateLabel(words);
+      labelInput.value = next; try { sessionStorage.setItem(labelKey, next); } catch {}
+      update(`New label: ${next}. Do not generate another after creating resources; use the names already recorded in your worksheet.`);
+    });
+    document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+      const field = $(`#${button.dataset.copy}`); if (!field.value) return;
+      try { await navigator.clipboard.writeText(field.value); status('#names-status', `Copied: ${field.value}`, 'success'); }
+      catch { field.focus(); field.select(); status('#names-status', 'The value is selected. Press Ctrl+C (Mac: Command+C), then paste it into the Dashboard.'); }
+    }));
+  }
   $('#clear')?.addEventListener('click', clear);
   addEventListener('pagehide', clear);
   const showImages = urls => {

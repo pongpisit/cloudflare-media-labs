@@ -4,12 +4,13 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import puppeteer from 'puppeteer-core';
-import { labEntries, root } from '../scripts/lab-kits.mjs';
+import { buildSite, labEntries, root } from '../scripts/lab-kits.mjs';
 
 const output = await mkdtemp(path.join(tmpdir(), 'browser-kits-'));
 for (const id of ['images','stream','r2']) {
   for (const entry of await labEntries(id, `${id}-lab`)) { const destination=path.join(output,entry.name);await mkdir(path.dirname(destination),{recursive:true});await writeFile(destination,entry.data); }
 }
+const siteOutput = await buildSite(path.join(output, 'site'));
 const browser = await puppeteer.launch({executablePath:process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
 const failures=[],errors=[],external=[];
 let checks=0;
@@ -67,7 +68,22 @@ try {
   await download.uploadFile(path.join(root,'samples/captions-en.vtt'));assert.equal(await page.$eval('#download-confirm',node=>node.checked),false);await page.click('#download-confirm');await page.click('#compare-form button');await page.waitForFunction(()=>document.querySelector('#compare-status').textContent.startsWith('MISMATCH'));
   await page.click('#clear');assert.equal(await page.$eval('#original-file',node=>node.files.length),0);checks++;
 
-  await page.emulateMediaType('print');assert.equal(await page.$eval('.actions',node=>getComputedStyle(node).display),'none');await page.emulateMediaType('screen');checks++;
+  // Lab names tool, in a kit and on the hosted site.
+  await open('images');const first=await page.$eval('#lab-label',node=>node.value);assert.match(first,/^[a-z]+-[a-z]+$/);
+  assert.equal(await page.$eval('#name-bucket',node=>node.value),`${first}-bucket`);
+  await page.reload();assert.equal(await page.$eval('#lab-label',node=>node.value),first,'a same-tab refresh keeps the label');
+  await page.$eval('#lab-label',node=>{node.value='BAD LABEL';node.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.equal(await page.$eval('#name-bucket',node=>node.value),'');assert.equal(await page.$eval('#names-status',node=>node.dataset.state),'error');
+  await page.click('#regen-label');assert.notEqual(await page.$eval('#lab-label',node=>node.value),'BAD LABEL');
+  await page.click('#clear');assert.match(await page.$eval('#lab-label',node=>node.value),/^[a-z]+-[a-z]+$/,'clear keeps the non-secret lab label');checks++;
+  for (const id of ['images','stream','r2']) {
+    await page.goto(pathToFileURL(path.join(siteOutput,id,'index.html')).href);
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2));
+    assert.equal(await page.$eval('.downloads a',node=>node.getAttribute('href').startsWith('../samples/')),true);
+    for (const response of await page.$$eval('.downloads a',nodes=>nodes.map(node=>node.href))) assert.ok(response.startsWith('file://'));
+  }
+  await page.goto(pathToFileURL(path.join(siteOutput,'index.html')).href);assert.equal(await page.$$eval('.card',nodes=>nodes.length),3);checks++;
+  await open('images');await page.emulateMediaType('print');assert.equal(await page.$eval('.actions',node=>getComputedStyle(node).display),'none');await page.emulateMediaType('screen');checks++;
   assert.deepEqual(failures,[]);assert.deepEqual(errors,[]);
   console.log(`PASS ${checks} browser kit groups: file:// desktop/phone layouts, labelled fields, bundled video, disconnected defaults, URL validation, Images dimensions, Stream fixture/reset, R2 provenance gate/hash match/mismatch and print. ${external.length} intercepted fixture requests; no live product operations.`);
 } finally {await browser.close();}
