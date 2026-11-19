@@ -58,37 +58,6 @@ if (typeof document !== 'undefined') {
     document.querySelectorAll('[data-status]').forEach(node => { if (node.dataset.initial) { node.textContent = node.dataset.initial; node.dataset.state = ''; } });
     document.querySelectorAll('video').forEach(video => video.pause());
   };
-  const labelKey = 'media-labs:lab-label:v1';
-  const labelInput = $('#lab-label');
-  if (labelInput) {
-    const words = JSON.parse($('#lab-words').textContent);
-    const update = (message = '') => {
-      try {
-        const names = labNames(labelInput.value.trim());
-        for (const [key, value] of Object.entries(names)) $(`#name-${key}`).value = value;
-        status('#names-status', message || 'Saved for this tab. Copy these names before creating resources. They are not passwords.', 'success');
-      } catch (error) {
-        for (const key of ['folder', 'bucket', 'card', 'detail']) $(`#name-${key}`).value = '';
-        status('#names-status', error.message, 'error');
-      }
-    };
-    let saved = '';
-    try { saved = sessionStorage.getItem(labelKey) || ''; } catch {}
-    labelInput.value = validLabel(saved) ? saved : generateLabel(words);
-    try { sessionStorage.setItem(labelKey, labelInput.value); } catch {}
-    update();
-    labelInput.addEventListener('input', () => { const value = labelInput.value.trim(); if (validLabel(value)) { try { sessionStorage.setItem(labelKey, value); } catch {} } update(); });
-    $('#regen-label').addEventListener('click', () => {
-      let next = generateLabel(words); while (next === labelInput.value.trim()) next = generateLabel(words);
-      labelInput.value = next; try { sessionStorage.setItem(labelKey, next); } catch {}
-      update(`New label: ${next}. Do not generate another after creating resources; keep using the names of the resources you already created.`);
-    });
-    document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
-      const field = $(`#${button.dataset.copy}`); if (!field.value) return;
-      try { await navigator.clipboard.writeText(field.value); status('#names-status', `Copied: ${field.value}`, 'success'); }
-      catch { field.focus(); field.select(); status('#names-status', 'The value is selected. Press Ctrl+C (Mac: Command+C), then paste it into the Dashboard.'); }
-    }));
-  }
   $('#clear')?.addEventListener('click', clear);
   addEventListener('pagehide', clear);
   const showImages = urls => {

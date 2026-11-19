@@ -4,14 +4,14 @@
 
 Your task: put your lesson files in a private storage bucket, download the video, and check that its contents match the original. A **bucket** holds files; an **object key** is a file's exact name in that bucket.
 
-You need `sample-document.txt`, `sample-video.mp4`, your copied **bucket and folder names**. The instructor arranges R2 activation and creation permission. You create a dedicated private **Standard** bucket; a restricted role uses an instructor-created/shared fallback.
+You need `sample-document.txt`, `sample-video.mp4`, unique **bucket and folder names** you choose. The instructor arranges R2 activation and creation permission. You create a dedicated private **Standard** bucket; a restricted role uses an instructor-created/shared fallback.
 
 ## 1. Create your private bucket — 5 minutes
 
 **Do this**
 
 1. In the approved account, open **R2 object storage → Overview** ([shortcut](https://dash.cloudflare.com/?to=/:account/r2/overview)). Select **Create bucket**.
-2. Paste the **Copy your own resource names → R2 bucket name** field on your R2 lab kit page into the name field. Legal names use **3–63 lowercase letters, numbers or hyphens**, with no leading/trailing hyphen. If the name exists, choose another unused legal name and record it.
+2. Enter your own unique bucket name, for example your lab label plus `-bucket`. Legal names use **3–63 lowercase letters, numbers or hyphens**, with no leading/trailing hyphen. If the name exists, choose another unused legal name and record it.
 3. Select the **location/jurisdiction approved by the instructor** and **Standard** as the default storage class. Do not choose Infrequent Access for this short-lived lab.
 4. Select **Create bucket**. Open the new bucket and confirm its exact name and whether you created it or it is a shared fallback.
 5. Open **Settings**. Confirm **Public Development URL / r2.dev** is disabled and no public custom domain is connected. Keep both routes off.
@@ -25,7 +25,7 @@ You need `sample-document.txt`, `sample-video.mp4`, your copied **bucket and fol
 
 **Do this**
 
-1. In **Objects**, choose **Create folder** if available. Paste your copied **lab folder name**, then open it.
+1. In **Objects**, choose **Create folder** if available. Enter your **lab folder name**, then open it.
 2. Choose **Upload → Select from computer**. Select the downloaded `sample-document.txt` and `sample-video.mp4` with Ctrl-click, then **Open** and confirm the upload.
 3. Wait for completion, close the upload panel and refresh the file list.
 4. Locate both exact object keys in Dashboard. Their names include your folder label and filename; keep this folder open for the download step.

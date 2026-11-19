@@ -4,7 +4,7 @@
 
 Your task: publish the 20-second studio clip, play it, and review its English captions. Uploading a video is not the same as having a playable video.
 
-You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. **Captions** are timed text for speech and relevant sounds.
+You need `sample-video.mp4`, `captions-en.vtt`, your chosen lab label. **Captions** are timed text for speech and relevant sounds.
 
 ## 1. Upload once and wait — 10 minutes
 

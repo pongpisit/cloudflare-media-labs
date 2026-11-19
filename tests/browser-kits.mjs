@@ -33,7 +33,11 @@ try {
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),`${id} ${width}: page overflow`);
       assert.equal(await page.$$eval('input',nodes=>nodes.filter(node=>!node.labels.length).length),0);
       assert.equal(await page.$$eval('iframe,[data-real-image]:not([hidden]),[data-real-link]:not([hidden])',nodes=>nodes.length),0);
-      assert.ok(await page.$eval('#connection-status',node=>node.textContent.startsWith('Not connected yet')));
+      if(id==='images') assert.equal(await page.$$eval('#connection-status,#image-form,#dimension-form,#image-file,#clear,#lab-label,#regen-label,#names-status,script',nodes=>nodes.length),0,'Images kit is instructional only: no status, forms, label/dimension tools, clear button or inline JS');
+      else {
+        assert.ok(await page.$eval('#connection-status',node=>node.textContent.startsWith('Not connected yet')));
+        assert.equal(await page.$$eval('#lab-label,#regen-label,#names-status,#name-bucket',nodes=>nodes.length),0,`${id}: no generated lab names UI`);
+      }
       if(id==='stream') {
         await page.waitForFunction(()=>document.querySelector('video').readyState>=1);
         assert.equal(await page.$eval('video',video=>video.duration),20);
@@ -43,16 +47,7 @@ try {
       checks++;
     }
   }
-  await page.setViewport({width:1280,height:800});await open('images');
-  await page.type('#image-url','https://imagedelivery.net/hash/id/public');await page.type('#card-name','lab-card');await page.type('#detail-name','lab-detail');
-  await page.click('#image-form button');
-  await page.waitForFunction(()=>[...document.querySelectorAll('[data-real-image]')].every(image=>image.complete&&image.naturalWidth));
-  assert.deepEqual(await page.$$eval('[data-real-link]',links=>links.map(link=>link.href)),['https://imagedelivery.net/hash/id/lab-card','https://imagedelivery.net/hash/id/lab-detail']);
-  await page.$eval('#image-url',node=>node.value='https://example.com/hash/id/public');await page.click('#image-form button');
-  assert.equal(await page.$eval('#connection-status',node=>node.dataset.state),'error');assert.equal(await page.$$eval('[data-real-image]',nodes=>nodes.filter(node=>!node.hidden).length),0);
-  await (await page.$('#image-file')).uploadFile(path.join(root,'samples/sample-image.jpg'));await page.click('#dimension-form button');
-  await page.waitForFunction(()=>document.querySelector('#dimension-status').dataset.state==='success');assert.match(await page.$eval('#dimension-status',node=>node.textContent),/1600 × 1200/);
-  await page.click('#clear');assert.equal(await page.$eval('#image-file',node=>node.files.length),0);checks++;
+  await page.setViewport({width:1280,height:800});
 
   await open('stream');await page.type('#stream-url','https://customer-test.cloudflarestream.com/EXAMPLE/iframe');await page.click('#stream-form button');
   assert.equal(await page.$eval('#player iframe',node=>node.referrerPolicy),'strict-origin-when-cross-origin');
@@ -67,15 +62,7 @@ try {
   await download.uploadFile(path.join(root,'samples/captions-en.vtt'));assert.equal(await page.$eval('#download-confirm',node=>node.checked),false);await page.click('#download-confirm');await page.click('#compare-form button');await page.waitForFunction(()=>document.querySelector('#compare-status').textContent.startsWith('MISMATCH'));
   await page.click('#clear');assert.equal(await page.$eval('#original-file',node=>node.files.length),0);checks++;
 
-  // Lab names tool inside a kit.
-  await open('images');const first=await page.$eval('#lab-label',node=>node.value);assert.match(first,/^[a-z]+-[a-z]+$/);
-  assert.equal(await page.$eval('#name-bucket',node=>node.value),`${first}-bucket`);
-  await page.reload();assert.equal(await page.$eval('#lab-label',node=>node.value),first,'a same-tab refresh keeps the label');
-  await page.$eval('#lab-label',node=>{node.value='BAD LABEL';node.dispatchEvent(new Event('input',{bubbles:true}));});
-  assert.equal(await page.$eval('#name-bucket',node=>node.value),'');assert.equal(await page.$eval('#names-status',node=>node.dataset.state),'error');
-  await page.click('#regen-label');assert.notEqual(await page.$eval('#lab-label',node=>node.value),'BAD LABEL');
-  await page.click('#clear');assert.match(await page.$eval('#lab-label',node=>node.value),/^[a-z]+-[a-z]+$/,'clear keeps the non-secret lab label');checks++;
-  await open('images');await page.emulateMediaType('print');assert.equal(await page.$eval('.actions',node=>getComputedStyle(node).display),'none');await page.emulateMediaType('screen');checks++;
+  await open('stream');await page.emulateMediaType('print');assert.equal(await page.$eval('.actions',node=>getComputedStyle(node).display),'none');await page.emulateMediaType('screen');checks++;
   assert.deepEqual(failures,[]);assert.deepEqual(errors,[]);
-  console.log(`PASS ${checks} browser kit groups: file:// desktop/phone layouts, labelled fields, bundled video, disconnected defaults, URL validation, Images dimensions, Stream fixture/reset, R2 provenance gate/hash match/mismatch and print. ${external.length} intercepted fixture requests; no live product operations.`);
+  console.log(`PASS ${checks} browser kit groups: file:// desktop/phone layouts, labelled fields, bundled video, disconnected defaults (Stream/R2), instructional-only Images kit, no lab names UI, Stream fixture/reset, R2 provenance gate/hash match/mismatch and print. ${external.length} intercepted fixture requests; no live product operations.`);
 } finally {await browser.close();}

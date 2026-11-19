@@ -4,14 +4,14 @@
 
 Your task: use one campus picture in two places on a course page. The small course card fills a wide box; the detail view keeps the whole picture.
 
-Read [Before you start](beginner-start.md). You need the downloaded `sample-image.jpg` and your two copied variant names. A **variant** is a saved rule for the image's size and crop.
+Read [Before you start](beginner-start.md). You need the downloaded `sample-image.jpg` and two unique variant names you choose. A **variant** is a saved rule for the image's size and crop.
 
 ## 1. Create two views before uploading — 9 minutes
 
 **Do this**
 
 1. Select the approved account, then open **Images → Hosted Images** ([shortcut](https://dash.cloudflare.com/?to=/:account/images/hosted)). Open **Delivery → Create variant**.
-2. Copy your **card variant name** from the lab kit and paste it into the name field. Select **Create**. If the name exists, choose a different unused name and keep using that name; do not edit the existing definition.
+2. Enter your own unique **card variant name**, for example your lab label plus `-card`. Select **Create**. If the name exists, choose a different unused name and keep using that name; do not edit the existing definition.
 3. Enter the card settings below. Apply the editor's save/update action, then reopen the settings to check the actual saved values.
 4. Repeat **Delivery → Create variant → name → Create** using your **detail variant name** and the detail settings.
 5. Record who created the variants and confirm both saved definitions **before uploading**. Creation uses account-wide settings; no image is required yet.
@@ -41,16 +41,14 @@ Read [Before you start](beginner-start.md). You need the downloaded `sample-imag
 
 **If it does not work:** missing product/upload access is an instructor setup issue. Do not activate another plan or keep uploading duplicate copies.
 
-## 3. Open and check the real images — 12 minutes
+## 3. Open and compare the delivered images — 12 minutes
 
 **Do this**
 
-1. Open your Images lab kit page (`START-HERE.html` from [the kit](https://github.com/pongpisit/cloudflare-media-labs/releases)) → **Show your actual card and detail images**.
-2. Paste the actual public `imagedelivery.net` URL from your image record. Paste your card and detail variant names into the matching fields. Click **Load real images**.
-3. Check the two pictures that load, then use **Open actual card image** and **Open actual detail image**. The tool only changes the last name in the URL; you must already have saved the variants in Cloudflare.
-4. Compare the pictures. Which top/bottom edge markers disappear from the card? Does the detail view retain the whole source?
-5. Right-click the card image → **Save image as**. Save it as `card-result` in Downloads. Do the same for the detail as `detail-result`. Keep the extension offered by the browser; delivery format can differ from the original JPEG.
-6. On the same page, under **Read image dimensions**, choose the downloaded card file, then click **Read dimensions**. Read the result, then repeat with the downloaded detail file.
+1. In your image record in Dashboard, find the delivery links. Open the link for your saved **card** variant, then the link for your **detail** variant.
+2. Compare the actual delivered images in your browser. Which top/bottom edge markers disappear from the card? Does the detail keep the whole source?
+3. To keep a copy, right-click each image → **Save image as**. Use `card-result` and `detail-result`, keeping the extension offered by the browser.
+4. Optional: in File Explorer, right-click a saved image → **Properties → Details**. If Windows supports that file format, read its width and height. Ask the instructor if dimensions are unavailable; no separate tool or file upload is needed.
 
 **You should see:**
 
@@ -59,13 +57,13 @@ Read [Before you start](beginner-start.md). You need the downloaded `sample-imag
 | Card | **320 × 180** | Cover fills a wide box and removes edges |
 | Detail | **960 × 720** | The 4:3 source fits inside 1280 × 720 without being stretched |
 
-The local tool reads the actual downloaded image. It does not simulate a Cloudflare result or upload your file anywhere. You do not need Developer Tools.
+Use the image delivered by Cloudflare, not the original sample or an error page. Displayed size in the browser is not necessarily the file's pixel dimensions.
 
-**If it does not work:** check the copied URL and exact variant names. A denied private image needs instructor-issued signed access; do not turn on a public override. Wrong dimensions usually mean the wrong variant or fit setting. If the file is not an image, save the actual image rather than an error page.
+**If it does not work:** confirm the exact saved variant names and fit settings in Dashboard. A private image needs instructor-authorized access; do not turn on a public override. Do not paste only an account delivery prefix—the link must identify your image and variant.
 
 ## 4. Show your result and clean up — 6 minutes
 
-1. Show both images and the dimension results to your partner. Compare the result with the expected dimensions above.
+1. Show both images and the dimension results to your partner. Point out the crop difference and compare any available dimensions with the expected values above.
 2. Return to **Hosted Images → your campus-picture record → Delete**. Confirm that the Image ID belongs to the image you uploaded before deleting it.
 3. In **Delivery**, delete only the two variants you personally created for this lab. Leave instructor-supplied or pre-existing variants alone.
 4. Refresh the lists to check removal. Keep the original sample.

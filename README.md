@@ -20,7 +20,7 @@ This repository contains the hands-on labs. Use the [workshop slides](https://ma
 2. Open **START-HERE.html** in Edge or Chrome. For the all-labs bundle, open the folder for your lab first.
 3. Keep [Cloudflare Dashboard](https://dash.cloudflare.com/) open in another tab and follow the lab guide.
 
-Each kit includes its image/video/document samples and ready-built HTML tools. No code editing, terminal or installation is required. Instructions and file tools work locally; Cloudflare operations need Internet access.
+Each kit includes its image/video/document samples and a ready-to-open HTML guide. The Images guide has no URL-entry forms, dimension checker or name generator. No code editing, terminal or installation is required. Instructions and file tools work locally; Cloudflare operations need Internet access.
 
 ## Keep it safe
 

@@ -31,11 +31,11 @@ Or [download all labs](https://github.com/pongpisit/cloudflare-media-labs/releas
 
 Individual files are also in [samples](../samples/). No terminal or software installation is needed.
 
-## 3. Copy your resource names
+## 3. Choose simple names
 
-At the bottom of **START-HERE.html**, find **Copy your own resource names**. Use the copy buttons to paste the names directly into Dashboard as you follow each lab. Keep the kit page open.
+Choose your own unique label, such as your initials plus today's date. Use it for your variants, video title, folder and bucket. For example, if your label is `ab-20261120`, use `ab-20261120-card`, `ab-20261120-detail` and `ab-20261120-bucket`. If a name already exists, choose another; never edit another student's resource.
 
-A refresh in the same tab keeps the label. Use **Generate a new label** only before creating resources. A different kit/tab may have a different label; continue using the names of the resources you already created.
+Keep your Dashboard resource pages open as you follow the lab. No name generator or worksheet is needed.
 
 ## 4. Follow one lab at a time
 
