@@ -4,7 +4,7 @@
 
 Your task: publish the 20-second studio clip, play it, and review its English captions. Uploading a video is not the same as having a playable video.
 
-You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. Use the results section below as your worksheet. **Captions** are timed text for speech and relevant sounds.
+You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. **Captions** are timed text for speech and relevant sounds.
 
 ## 1. Upload once and wait — 10 minutes
 
@@ -13,7 +13,7 @@ You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. Use the r
 1. In the instructor's Cloudflare account, search for **Stream → Videos**. [Open Videos](https://dash.cloudflare.com/?to=/:account/stream/videos).
 2. Choose **Quick upload** or the upload button. Select **Downloads → sample-video.mp4 → Open**.
 3. Open the new video record. If a title/name field is available, paste your lab label followed by `-lesson`.
-4. Copy the **video ID/UID** into your worksheet. The title and ID are different.
+4. Find the **video ID/UID** and keep this video record open. The title and ID are different.
 5. Wait until the player is available. Press **Play** and listen to the clip. Do not upload another copy while it is processing.
 
 **You should see:** the blue studio scene and hear a short English lesson. Being playable does not prove every quality level is finished processing.
@@ -26,7 +26,7 @@ You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. Use the r
 
 1. On your video, look for **Captions/Subtitles → Upload/Add captions** if that control is available.
 2. Choose **English**, then **Downloads → captions-en.vtt → Open**. Confirm the upload and wait for the track to be ready.
-3. If the caption upload control is absent or unavailable to your role, give the instructor your recorded video ID. The instructor attaches the file using the prepared API procedure. Mark **instructor attached captions** in your worksheet.
+3. If the caption upload control is absent or unavailable to your role, give the instructor the video ID from your own video record. The instructor attaches the file using the prepared API procedure.
 4. In your actual video player, open **CC/subtitles → English**. Play from the beginning to the end.
 
 **You should see:** captions matching the speech. The first cue is “Welcome to this sample media publishing lesson.” The last is “Check readiness, captions, and access before sharing.”
@@ -43,7 +43,7 @@ You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. Use the r
 
 **You should see:** the same clip and captions in the player. Do not paste the entire HTML snippet or an API key into the preview. The instructor prepares allowed-origin settings if needed; do not turn off access policies to make an embed work.
 
-**If it does not work:** keep the successful Dashboard playback result and record **embed not performed**. Ask the instructor to identify whether the problem is a wrong URL or an embed/access setting.
+**If it does not work:** use the Dashboard player to complete the playback step. Ask the instructor to identify whether the problem is a wrong URL or an embed/access setting.
 
 ## 4. Watch a private-access demonstration — 7 minutes
 
@@ -55,30 +55,17 @@ The instructor uses an owned sample video and shows three fresh requests:
 | Valid short-lived link | Allowed |
 | Same link after expiry, new request | Denied |
 
-Watch and record the observed results as **instructor demonstration**, or **not performed** if skipped. You do not create a token or run commands. A player continuing with already-downloaded video after expiry is not evidence that the expired link still works. Your course application would decide who receives a link.
+Watch the instructor demonstrate each result. Skip this optional demonstration if it is not available. You do not create a token or run commands. A player continuing with already-downloaded video after expiry is not evidence that the expired link still works. Your course application would decide who receives a link.
 
 ## 5. Show your result and clean up — 5 minutes
 
-1. Complete the Stream worksheet: played with sound, caption review, and who attached captions.
+1. Show your partner that the video plays with sound and the English captions match the speech.
 2. Use **Clear connections and selections** in the kit if you loaded a player.
-3. Return to **Stream → Videos → your recorded video → Delete** or its **…** menu. Delete only your recorded video. Check its ID/title, confirm, then refresh the list.
+3. Return to **Stream → Videos → your own video → Delete** or its **…** menu. Delete only your own video. Check its ID/title, confirm, then refresh the list.
 4. Keep your original MP4 and caption file. Do not delete the instructor's demonstration video.
 
 **Explain in one sentence:** “Stream prepares video for playback; I checked the player and reviewed the captions.”
 
 Official references: [Stream getting started](https://developers.cloudflare.com/stream/get-started/), [captions](https://developers.cloudflare.com/stream/edit-videos/adding-captions/), [private playback](https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/).
-
-## My results
-
-Copy these fields into a local note. Never record playback tokens or signed links.
-
-- Account / lab label:
-- Video ID / UID:
-- Played with sound: yes / no
-- Captions attached by: me / instructor / not performed
-- First and last captions reviewed: yes / no
-- Embed: learner / instructor demonstration / not performed
-- Private access: instructor demonstration / not performed
-- Video deleted: yes / not yet
 
 **Next:** [Lab 3 — R2](beginner-r2.md).

@@ -33,15 +33,15 @@ Individual files are also in [samples](../samples/). No terminal or software ins
 
 ## 3. Copy your resource names
 
-At the bottom of **START-HERE.html**, find **Copy your own resource names**. Copy the label, folder/bucket name and card/detail variant names into a local note before creating anything.
+At the bottom of **START-HERE.html**, find **Copy your own resource names**. Use the copy buttons to paste the names directly into Dashboard as you follow each lab. Keep the kit page open.
 
-A refresh in the same tab keeps the label. Use **Generate a new label** only before creating resources. A different kit/tab may have a different label; continue using the names already recorded for your resources.
+A refresh in the same tab keeps the label. Use **Generate a new label** only before creating resources. A different kit/tab may have a different label; continue using the names of the resources you already created.
 
 ## 4. Follow one lab at a time
 
 **[Images · 35 min](beginner-images.md) → [Stream · 40 min](beginner-stream.md) → [R2 · 35 min](beginner-r2.md)**
 
-Each guide includes the steps, expected result, help and cleanup, with a short results section to copy into your own notes. Record what actually happened; an instructor demonstration or a blocked step is not a learner-completed operation.
+Each guide includes the steps, expected result, help and cleanup. Follow the numbered steps and compare what you see with the expected result—no worksheet or report is required. Ask the instructor for help if a step is blocked.
 
 ## Safety and help
 
@@ -50,4 +50,4 @@ Each guide includes the steps, expected result, help and cleanup, with a short r
 - Signed delivery/player/presigned URLs grant temporary access. Do not save them in notes, screenshots or Git; use **Clear connections and selections** afterward.
 - If Stream's allowed-origin policy blocks a local iframe, verify the video in Dashboard instead. Do not turn off the policy.
 - If a browser cannot read a selected file, use a current Edge or Chrome and open the page from the extracted folder. Ask the instructor if still blocked.
-- Delete only your recorded resources. Never empty shared buckets or delete supplied variants/videos.
+- Delete only the resources you personally created. Never empty shared buckets or delete supplied variants/videos.

@@ -26,7 +26,7 @@ Each kit includes its image/video/document samples and ready-built HTML tools. N
 
 - Use only the instructor-approved account and supplied synthetic files. Product usage can incur charges.
 - Never put API tokens, signing keys or R2 secret keys in the HTML page. Signed media URLs are sensitive too—clear them after use.
-- Record results in the small results section at the end of each lab. Delete only resources you personally created.
+- Follow the numbered steps and compare the actual result on screen. No worksheet or report is required. Delete only resources you personally created.
 - If a restricted Stream video will not embed from a local file, use the Dashboard player. Do not disable access policies.
 
 [Individual sample files](samples/) · [All releases and checksums](https://github.com/pongpisit/cloudflare-media-labs/releases)

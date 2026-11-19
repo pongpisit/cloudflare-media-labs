@@ -81,7 +81,7 @@ if (typeof document !== 'undefined') {
     $('#regen-label').addEventListener('click', () => {
       let next = generateLabel(words); while (next === labelInput.value.trim()) next = generateLabel(words);
       labelInput.value = next; try { sessionStorage.setItem(labelKey, next); } catch {}
-      update(`New label: ${next}. Do not generate another after creating resources; use the names already recorded in your worksheet.`);
+      update(`New label: ${next}. Do not generate another after creating resources; keep using the names of the resources you already created.`);
     });
     document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
       const field = $(`#${button.dataset.copy}`); if (!field.value) return;

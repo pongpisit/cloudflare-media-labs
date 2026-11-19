@@ -83,7 +83,7 @@ test('the lab-only documentation keeps setup, results and safe cleanup inside th
   assert.match(start, /no API keys or commands/);
   for (const product of ['images', 'stream', 'r2']) {
     const guide = await readFile(path.join(root, `docs/beginner-${product}.md`), 'utf8');
-    assert.match(guide, /## My results/);
+    assert.doesNotMatch(guide, /## My results|worksheet/i);
     assert.match(guide, /instructor/);
     assert.doesNotMatch(guide, /beginner-worksheet\.md|beginner-setup\.md/);
   }
