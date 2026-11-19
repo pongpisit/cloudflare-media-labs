@@ -4,7 +4,7 @@
 
 Your task: use one campus picture in two places on a course page. The small course card fills a wide box; the detail view keeps the whole picture.
 
-Have [the start guide](beginner-start.md) and [worksheet](beginner-worksheet.md) ready. You need the downloaded `sample-image.jpg` and your two copied variant names. A **variant** is a saved rule for the image's size and crop.
+Read [Before you start](beginner-start.md). Use the results section below as your worksheet. You need the downloaded `sample-image.jpg` and your two copied variant names. A **variant** is a saved rule for the image's size and crop.
 
 ## 1. Create two views before uploading — 9 minutes
 
@@ -65,7 +65,7 @@ The local tool reads the actual downloaded image. It does not simulate a Cloudfl
 
 ## 4. Show your result and clean up — 6 minutes
 
-1. Show both images and the dimension results to your partner. Complete the three Images lines in the worksheet.
+1. Show both images and the dimension results to your partner. Record the results below.
 2. Return to **Hosted Images → your campus-picture record → Delete**. Check the recorded Image ID before confirming.
 3. In **Delivery**, delete only the two variants you personally created for this lab. Leave instructor-supplied or pre-existing variants alone.
 4. Refresh the lists to check removal. Keep your original and non-secret worksheet.
@@ -74,8 +74,22 @@ The local tool reads the actual downloaded image. It does not simulate a Cloudfl
 
 ### Optional instructor demonstration
 
-The instructor can show private image access: unsigned denied, signed allowed, then an expired link denied on a fresh request. Record this as **instructor demonstration**. It is not required to finish your browser task. [Instructor/reference Images guide](01-images.md#c-optional-private-image-and-native-powershell-hmac).
+The instructor can show private image access: unsigned denied, signed allowed, then an expired link denied on a fresh request. Record this as **instructor demonstration**. It is not required to finish your browser task.
 
 Official references: [Upload methods](https://developers.cloudflare.com/images/storage/upload-images/methods/), [variants and fit](https://developers.cloudflare.com/images/optimization/hosted-images/create-variants/).
+
+## My results
+
+Copy these fields into a local note. Do not record signed URLs or secrets.
+
+- Account / lab label:
+- Image ID:
+- Card / detail variant names:
+- Variants created by: me / instructor
+- Saved settings checked before upload: yes / not checked
+- Card downloaded dimensions:
+- Detail downloaded dimensions:
+- Crop observation:
+- Image and personally created variants deleted: yes / not yet / instructor supplied
 
 **Next:** [Lab 2 — Stream](beginner-stream.md).

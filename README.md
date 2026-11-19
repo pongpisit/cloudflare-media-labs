@@ -1,83 +1,41 @@
 # Cloudflare Media Labs
 
-**Click. Copy and paste. Check what happened.**
+**Download a kit → follow the lab → show your result → clean up.**
 
-Beginner-friendly Images, Stream and R2 labs for people who publish media rather than write code. Use **Windows 10/11 + Edge or Chrome**, Cloudflare Dashboard, and the supplied samples. Each short guide tells you what to click, what to copy, what you should see, and how to finish. **No terminal, API key or software installation is required for the learner route.** The hosted guide needs no download or ZIP extraction; the download-first browser kits (below) need only a ZIP extraction.
+This repository contains the hands-on labs. Use the [workshop slides](https://mahidol-media-training.pongpisit.workers.dev/) for explanations and architecture.
 
-### [Start here — the beginner guide →](docs/beginner-start.md)
+## Choose your lab
 
-**[Download the lab kits](https://github.com/pongpisit/cloudflare-media-labs/releases)** — steps, samples and checking tools · **[Workshop slides](https://mahidol-media-training.pongpisit.workers.dev/)** — the training deck · **[My worksheet](docs/beginner-worksheet.md)**
-
-> **How the pieces fit:** the *workshop slides* (a Cloudflare Worker) teach the ideas. This *repository* is the only home for the labs: written guides, samples, and the downloadable kits with the checking tools. Nothing in the labs needs the slides open.
-
-## Download first (browser lab kits)
-
-The browser kits include a ready-to-open HTML guide and the materials for **Images**, **Stream**, **R2**, or an **all-labs** bundle. Local instructions and file tools work offline; Dashboard operations and real media delivery still need Internet access. Each is a ZIP file that you extract and open in Edge or Chrome.
-
-**Availability:** ZIPs are not stored in the repository. A maintainer builds them and publishes a tagged release, so they are available only once that release exists. Check the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases). If no release is listed, follow the written guides in `docs/` and download the individual samples below. Ask your instructor which release to use.
-
-| Images lab · 35 min | Stream lab · 40 min | R2 lab · 35 min |
-|---|---|---|
-| JPEG + ready-built card/detail page | MP4 + captions + ready-built player page | Document/video + ready-built file comparison |
-| [Find `images-lab.zip` in Releases](https://github.com/pongpisit/cloudflare-media-labs/releases) | [Find `stream-lab.zip` in Releases](https://github.com/pongpisit/cloudflare-media-labs/releases) | [Find `r2-lab.zip` in Releases](https://github.com/pongpisit/cloudflare-media-labs/releases) |
-
-**[Kit contents, privacy and troubleshooting](docs/browser-kits.md)**
-
-**How to use a kit once available:**
-
-1. On the release page, download the ZIP for your lab (`images-lab.zip`, `stream-lab.zip` or `r2-lab.zip`), or `all-labs.zip` for every lab. The release may also list `SHA256SUMS.txt` for an optional integrity check.
-2. In File Explorer, right-click the ZIP and choose **Extract All**. Do not open `START-HERE.html` from inside the ZIP preview.
-3. Open the extracted folder and double-click **START-HERE.html**. It opens in your browser. It does not need a terminal, an installer or a web server.
-
-**Browser tool limits:**
-
-- The tools work locally in your browser, including image dimension checks and SHA-256 file comparison. They do not upload your files.
-- **Never enter an API key, signing key, password or R2 secret key.** The tools do not log in to Cloudflare. Connections and selections are cleared when you close or leave the page, or press the clear button. You may optionally paste an actual delivery URL or player URL, but treat it as sensitive: a URL with a bearer or signed token grants access to anyone who has it. Do not share it, screenshot it or save it in Git.
-- A Stream player embedded in a locally opened page can fail Stream's allowed-origin check, so a restricted video may not play there. This is expected: the core check is the player in your Dashboard. Do not turn off access policies.
-
-**Sample files from `main` (individual downloads):** right-click a link and choose **Save link as…**.
-
-- [sample-image.jpg](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-image.jpg)
-- [sample-video.mp4](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-video.mp4)
-- [captions-en.vtt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/captions-en.vtt)
-- [sample-document.txt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-document.txt)
-
-## Start here
-
-1. Select the approved account and follow [First-time setup](docs/beginner-setup.md): Account ID, product access and scoped API credentials for authorized operators.
-2. Download the lab kit for your lab from the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases), extract it and open **START-HERE.html**. At the bottom of the page, **Copy your own resource names** gives your folder, bucket and variant names.
-3. Follow these guides in order. Work with a partner and record the actual results in [your worksheet](docs/beginner-worksheet.md).
-
-| Lab | What you do | What you should show | Budget |
+| Lab | Guide | Download | Time |
 |---|---|---|---|
-| [Images](docs/beginner-images.md) | Create/check two variants first, then upload a picture, open and download both views | Card **320×180**, detail **960×720**, and an explained crop | 35 min |
-| [Stream](docs/beginner-stream.md) | Upload once, wait, play, add/review captions with instructor help when needed | A real clip with matching sound and captions | 40 min |
-| [R2](docs/beginner-r2.md) | Create a private Standard bucket, upload files, download the video and compare locally | Recorded bucket/privacy and an actual download matching the original | 35 min |
+| 1 · Images | [Create and compare two image views](docs/beginner-images.md) | [Images kit](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/images-lab.zip) | 35 min |
+| 2 · Stream | [Publish a video and review captions](docs/beginner-stream.md) | [Stream kit](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/stream-lab.zip) | 40 min |
+| 3 · R2 | [Store, download and compare files](docs/beginner-r2.md) | [R2 kit](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/r2-lab.zip) | 35 min |
 
-These operations use billable products in **your account**. The samples are one small JPEG, a 20-second synthetic clip and a text document; the optional multipart extension adds 12 MiB. Review current product pricing and clean up when finished.
+**[Download all three kits](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/all-labs.zip)** · **[Before you start](docs/beginner-start.md)**
 
-## Help for instructors and technical operators
+## Open the kit
 
-Start with [Instructor preparation](docs/instructor.md). It covers account/permissions, teaching resource creation with explicit role-restricted fallbacks, scoped REST/R2 credentials, caption assistance, private-access demonstrations and owned cleanup. The earlier detailed API guides remain available as technical references. Beginners do not need to choose among those routes.
+1. Download your ZIP and choose **Extract All** in File Explorer.
+2. Open **START-HERE.html** in Edge or Chrome. For the all-labs bundle, open the folder for your lab first.
+3. Keep [Cloudflare Dashboard](https://dash.cloudflare.com/) open in another tab and follow the lab guide.
 
-### Retained API tools and credentials
+Each kit includes its image/video/document samples and ready-built HTML tools. No code editing, terminal or installation is required. Instructions and file tools work locally; Cloudflare operations need Internet access.
 
-The preferred Windows examples use **Windows PowerShell 5.1 or PowerShell 7**, native `Invoke-RestMethod` for JSON, and **`curl.exe`** for multipart files/status checks. [Windows quick start](docs/windows.md) includes hidden token entry, a copy/paste REST helper, and REST-client steps. Existing Bash examples remain available for macOS/Linux/WSL. Use account-scoped Images/Stream bearer tokens; R2 S3 calls use separate bucket-scoped access keys.
+## Keep it safe
 
-R2 presigning is local SigV4 signing, not a Cloudflare REST endpoint or a Dashboard button. An operator with **AWS CLI v2** can generate a link; participants consume it with a normal browser GET. The Windows multipart route uses AWS CLI plus built-in PowerShell/.NET; the Bash raw-HTTP route uses curl SigV4 and Python 3 standard-library tools. Optional tasks replace repetition within the existing lab budget or become follow-up.
+- Use only the instructor-approved account and supplied synthetic files. Product usage can incur charges.
+- Never put API tokens, signing keys or R2 secret keys in the HTML page. Signed media URLs are sensitive too—clear them after use.
+- Record results in the small results section at the end of each lab. Delete only resources you personally created.
+- If a restricted Stream video will not embed from a local file, use the Dashboard player. Do not disable access policies.
 
-## Evidence and ownership
+[Individual sample files](samples/) · [All releases and checksums](https://github.com/pongpisit/cloudflare-media-labs/releases)
 
-- Record account label, unique variant names, image ID, video UID, bucket and exact object keys in [My worksheet](docs/beginner-worksheet.md). Instructors use the [technical worksheet](docs/worksheet.md) for API extensions.
-- Cleanup is manual and limited to those recorded resources. A prefix is a naming convention, not a permission boundary.
-- Do not save API keys, full playback tokens or signed URLs in Git/screenshots/worksheets.
-- Check the actual image, player/captions and downloaded file before continuing. An upload alone does not establish correct delivery or authorization.
-- A blocked step stays **unperformed**; the presentation's labelled simulations explain mechanisms but are not real product evidence.
+<details>
+<summary>Maintainers</summary>
 
-## Maintainer tooling
+The learner pages come from `browser-labs/`; samples are in `samples/`. `npm run package:labs` generates the ZIPs in ignored `downloads/`. Publish a new version using the manual **Publish browser lab kits** workflow. The scripts and tests are maintainer tooling, not learner prerequisites. Earlier technical documentation remains available in Git history.
 
-**Browser lab kits.** `npm run package:labs` builds `downloads/images-lab.zip`, `downloads/stream-lab.zip`, `downloads/r2-lab.zip`, `downloads/all-labs.zip` and `downloads/SHA256SUMS.txt`. Each ZIP contains `START-HERE.html` (all-labs uses one folder per lab), generated by the script with inline styles/scripts; generated HTML and ZIPs are not checked in. The shared sources are `browser-labs/lab.js`, `browser-labs/lab.css` and `browser-labs/content.mjs`. To publish, run the manual **lab-kits.yml** workflow (`workflow_dispatch`) and enter the required release **tag** input. Learner links to the Releases page are valid only after a maintainer has done this.
+</details>
 
-The earlier Node REST/S3 integrations remain in `scripts/`, `tests/` and the pinned package files as optional maintainer tooling. They are not required by participants. `npm test` checks the integration cases, document links, beginner-route constraints, timeboxes and actual caption-file consistency. GitHub Actions also checks documented PowerShell syntax and runs the local REST/S3 helpers and multipart fixture/completion logic with mocked transports on **Windows PowerShell 5.1 and PowerShell 7** (`tests/windows-docs.ps1`). No credentials or cloud mutations are used. These checks do not certify customer account permissions or actual playback.
-
-This is an unofficial educational project. Official sources are linked in [product theory](docs/00-theory.md) and each lab. It is not a production LMS authorization service.
+Unofficial educational labs; not a production authorization service.

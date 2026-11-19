@@ -75,26 +75,21 @@ test('beginner caption checks match the supplied WebVTT rather than invented tex
   assert.ok(guide.includes(cues.at(-1)), 'Final-cue review must use the actual sample');
 });
 
-test('first-time setup teaches creation before upload with scoped credentials and recorded ownership', async () => {
-  const images=await readFile(path.join(root,'docs/beginner-images.md'),'utf8');
-  const r2=await readFile(path.join(root,'docs/beginner-r2.md'),'utf8');
-  const setup=await readFile(path.join(root,'docs/beginner-setup.md'),'utf8');
-  const worksheet=await readFile(path.join(root,'docs/beginner-worksheet.md'),'utf8');
-  assert.ok(images.indexOf('## 1. Create two views')<images.indexOf('## 2. Upload your picture'));
-  assert.match(images,/before uploading|before upload/);assert.match(images,/reopen.*actual saved/);
-  assert.ok(r2.indexOf('## 1. Create your private bucket')<r2.indexOf('## 2. Upload your files'));
-  assert.match(r2,/3–63 lowercase.*no leading\/trailing hyphen/);
-  assert.match(r2,/Standard.*default storage class/);
-  assert.match(r2,/instructor created \/ shared fallback/);
-  assert.match(r2,/Only if you created.*completely empty/);
-  assert.match(r2,/Never use.*Empty Bucket.*shared storage/);
-  assert.doesNotMatch(setup,/```|\$env:|curl\.exe|npm (?:run|ci|install)/,'Setup explanation needs no commands or secret entry');
-  assert.match(setup,/authorized administrator\/instructor/);
-  assert.match(setup,/Specific account.*approved workshop account/);
-  assert.match(setup,/TTL\/expiry/);assert.match(setup,/once-shown secret/);
-  assert.match(setup,/after the bucket exists/);assert.match(setup,/Object Read & Write/);
-  assert.match(setup,/only the recorded workshop bucket/);
-  assert.match(setup,/not Cloudflare REST.*do not create\/configure\/delete buckets/);
-  assert.match(setup,/read-only check/);assert.match(setup,/revokes only/);
-  for(const term of ['Variants created by','before upload','Bucket created by','shared fallback','REST token created by','R2 credentials created by','revoked','not performed'])assert.ok(worksheet.includes(term),`Worksheet lacks ${term}`);
+test('the lab-only documentation keeps setup, results and safe cleanup inside the learner route', async () => {
+  const files = (await readdir(path.join(root, 'docs'))).filter(name => name.endsWith('.md')).sort();
+  assert.deepEqual(files, ['beginner-images.md', 'beginner-r2.md', 'beginner-start.md', 'beginner-stream.md']);
+  const start = await readFile(path.join(root, 'docs/beginner-start.md'), 'utf8');
+  assert.match(start, /approved account/);
+  assert.match(start, /no API keys or commands/);
+  for (const product of ['images', 'stream', 'r2']) {
+    const guide = await readFile(path.join(root, `docs/beginner-${product}.md`), 'utf8');
+    assert.match(guide, /## My results/);
+    assert.match(guide, /instructor/);
+    assert.doesNotMatch(guide, /beginner-worksheet\.md|beginner-setup\.md/);
+  }
+  const images = await readFile(path.join(root, 'docs/beginner-images.md'), 'utf8');
+  assert.ok(images.indexOf('## 1. Create two views') < images.indexOf('## 2. Upload your picture'));
+  const r2 = await readFile(path.join(root, 'docs/beginner-r2.md'), 'utf8');
+  assert.ok(r2.indexOf('## 1. Create your private bucket') < r2.indexOf('## 2. Upload your files'));
+  assert.match(r2, /Never use.*Empty Bucket.*shared storage/);
 });

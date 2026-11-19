@@ -4,7 +4,7 @@
 
 Your task: put your lesson files in a private storage bucket, download the video, and check that its contents match the original. A **bucket** holds files; an **object key** is a file's exact name in that bucket.
 
-You need `sample-document.txt`, `sample-video.mp4`, your copied **bucket and folder names**, and [worksheet](beginner-worksheet.md). The instructor arranges R2 activation and creation permission. You create a dedicated private **Standard** bucket; a restricted role follows an explicitly recorded instructor-created/shared fallback.
+You need `sample-document.txt`, `sample-video.mp4`, your copied **bucket and folder names**. Use the results section below as your worksheet. The instructor arranges R2 activation and creation permission. You create a dedicated private **Standard** bucket; a restricted role follows an explicitly recorded instructor-created/shared fallback.
 
 ## 1. Create your private bucket — 5 minutes
 
@@ -55,7 +55,7 @@ The tool reads the two files locally in your browser. It does not upload them or
 
 Show the uploaded MP4 and answer: “Is this now a Stream video?” **No.** R2 stores the file; it does not create Stream's adaptive-quality player, captions or video pipeline.
 
-The instructor may show [R2 S3 credential creation](beginner-setup.md) and a temporary download link after the bucket exists. Record who performed it, or **not performed**; keep keys and signed links out of the worksheet. The main task requires no API key, CLI installation or multipart procedure.
+The instructor may demonstrate a temporary download link after the bucket exists. Record who performed it, or **not performed**; keep keys and signed links out of the worksheet. The main task requires no API key, CLI installation or multipart procedure.
 
 ## 5. Clean up — 5 minutes
 
@@ -67,6 +67,19 @@ The instructor may show [R2 S3 credential creation](beginner-setup.md) and a tem
 
 **Explain in one sentence:** “I downloaded my stored file and checked that its contents match the original.”
 
-Official references: [Dashboard bucket creation](https://developers.cloudflare.com/r2/get-started/workers-api/#1-create-a-bucket), [bucket naming](https://developers.cloudflare.com/r2/buckets/create-buckets/), [storage classes](https://developers.cloudflare.com/r2/buckets/storage-classes/), [Dashboard upload](https://developers.cloudflare.com/r2/objects/upload-objects/), [Dashboard download](https://developers.cloudflare.com/r2/objects/download-objects/), [delete an empty bucket](https://developers.cloudflare.com/r2/buckets/delete-buckets/#delete-a-bucket). [Instructor/API reference](03-r2.md).
+Official references: [Dashboard bucket creation](https://developers.cloudflare.com/r2/get-started/workers-api/#1-create-a-bucket), [bucket naming](https://developers.cloudflare.com/r2/buckets/create-buckets/), [storage classes](https://developers.cloudflare.com/r2/buckets/storage-classes/), [Dashboard upload](https://developers.cloudflare.com/r2/objects/upload-objects/), [Dashboard download](https://developers.cloudflare.com/r2/objects/download-objects/), [delete an empty bucket](https://developers.cloudflare.com/r2/buckets/delete-buckets/#delete-a-bucket).
 
-**Finish:** show [your completed worksheet](beginner-worksheet.md) to the instructor.
+## My results
+
+Copy these fields into a local note. Never record access keys or signed links.
+
+- Actual bucket / folder / exact object keys:
+- Bucket created by: me / instructor / shared fallback
+- Storage class / approved location:
+- Public routes confirmed disabled: yes / not checked
+- Original file / actual downloaded file:
+- Comparison: MATCH / MISMATCH / not performed
+- Owned files and folder marker deleted: yes / not yet
+- Own empty bucket deleted: yes / instructor-owned / shared fallback / not yet
+
+**Finish:** show your actual results to the instructor and confirm cleanup.

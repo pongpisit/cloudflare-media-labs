@@ -4,7 +4,7 @@
 
 Your task: publish the 20-second studio clip, play it, and review its English captions. Uploading a video is not the same as having a playable video.
 
-You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label and [worksheet](beginner-worksheet.md). **Captions** are timed text for speech and relevant sounds.
+You need `sample-video.mp4`, `captions-en.vtt`, your copied lab label. Use the results section below as your worksheet. **Captions** are timed text for speech and relevant sounds.
 
 ## 1. Upload once and wait — 10 minutes
 
@@ -60,12 +60,25 @@ Watch and record the observed results as **instructor demonstration**, or **not 
 ## 5. Show your result and clean up — 5 minutes
 
 1. Complete the Stream worksheet: played with sound, caption review, and who attached captions.
-2. Clear the workshop live preview if used.
+2. Use **Clear connections and selections** in the kit if you loaded a player.
 3. Return to **Stream → Videos → your recorded video → Delete** or its **…** menu. Delete only your recorded video. Check its ID/title, confirm, then refresh the list.
 4. Keep your original MP4 and caption file. Do not delete the instructor's demonstration video.
 
 **Explain in one sentence:** “Stream prepares video for playback; I checked the player and reviewed the captions.”
 
-Official references: [Stream getting started](https://developers.cloudflare.com/stream/get-started/), [captions](https://developers.cloudflare.com/stream/edit-videos/adding-captions/), [private playback](https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/). [Instructor/API reference](02-stream.md#windows-powershellapi-option).
+Official references: [Stream getting started](https://developers.cloudflare.com/stream/get-started/), [captions](https://developers.cloudflare.com/stream/edit-videos/adding-captions/), [private playback](https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/).
+
+## My results
+
+Copy these fields into a local note. Never record playback tokens or signed links.
+
+- Account / lab label:
+- Video ID / UID:
+- Played with sound: yes / no
+- Captions attached by: me / instructor / not performed
+- First and last captions reviewed: yes / no
+- Embed: learner / instructor demonstration / not performed
+- Private access: instructor demonstration / not performed
+- Video deleted: yes / not yet
 
 **Next:** [Lab 3 — R2](beginner-r2.md).

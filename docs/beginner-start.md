@@ -1,61 +1,53 @@
-# Start here — your first media lab
+# Before you start
 
-You do not need to write code. Keep this guide in one browser tab and Cloudflare Dashboard in another. Follow one numbered step at a time.
+The lab instructions are here on GitHub. The [workshop slides](https://mahidol-media-training.pongpisit.workers.dev/) explain the concepts; you do not need them open while doing a lab.
 
-**You need:** Windows 10/11 with Edge or Chrome, access to the approved workshop account, and permission to download sample files. Other desktop browsers can follow the same click steps. The instructor arranges product activation/capacity; the labs teach creation of variants and a private bucket before uploading.
+## 1. Open the approved account
 
-## 1. Open your two working tabs
+1. Sign in to [Cloudflare Dashboard](https://dash.cloudflare.com/) and select the account named by your instructor.
+2. Ask the instructor to confirm product activation, capacity and your permission to create, upload and delete lab resources. Do not purchase a plan or use production resources.
+3. Keep Dashboard open beside your lab kit. Browser labs need **no API keys or commands**. The instructor handles API-only demonstrations.
 
-1. Open the [lab kit page](https://github.com/pongpisit/cloudflare-media-labs/releases) and download the ZIP for your lab (or `all-labs.zip`). Extract it, then double-click **START-HERE.html**. The page has the steps, samples and checking tools. If no kit is published yet, follow the written guide for your lab and use the individual downloads below.
-2. Open [Cloudflare Dashboard](https://dash.cloudflare.com/) in a second tab. Sign in, then select the account named by your instructor.
-3. Keep both tabs open. Return to this guide after each Dashboard step.
-4. In Dashboard **Search** (**Ctrl+K**, Mac: **Command+K**), select **Copy account ID** and record it in your local worksheet. Read [First-time setup](beginner-setup.md) for product-access checks and the scoped API-token walkthrough. An authorized operator creates credentials; browser lab participants need none.
+## 2. Download and open your kit
 
-**You should see:** the instructor's account name in Cloudflare. If you cannot see it, ask the instructor to fix access before uploading anything.
-
-## 2. Download the four sample files
-
-The lab kit already contains the samples for its lab (in its `samples` folder). To download them one by one instead, use these links. Click each download:
-
-| Download | What it is | Used in |
+| Lab | Download | Written guide |
 |---|---|---|
-| Training image | `sample-image.jpg`, an orange campus picture | Images |
-| English training video | `sample-video.mp4`, a 20-second blue studio clip | Stream and R2 |
-| English captions | `captions-en.vtt`, timed text for the clip | Stream |
-| Sample document | `sample-document.txt`, a small text file | R2 |
+| Images | [images-lab.zip](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/images-lab.zip) | [Lab 1](beginner-images.md) |
+| Stream | [stream-lab.zip](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/stream-lab.zip) | [Lab 2](beginner-stream.md) |
+| R2 | [r2-lab.zip](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/r2-lab.zip) | [Lab 3](beginner-r2.md) |
 
-Open **File Explorer → Downloads** and find these files. Keep the original files. You do not need to download a ZIP, open a terminal or install a package.
+Or [download all labs](https://github.com/pongpisit/cloudflare-media-labs/releases/latest/download/all-labs.zip).
 
-**Download-first option:** the same samples are available from the repository. Right-click a link and choose **Save link as…**: [sample-image.jpg](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-image.jpg), [sample-video.mp4](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-video.mp4), [captions-en.vtt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/captions-en.vtt), [sample-document.txt](https://raw.githubusercontent.com/pongpisit/cloudflare-media-labs/main/samples/sample-document.txt).
+1. In File Explorer, right-click the ZIP → **Extract All**.
+2. Open the extracted folder and double-click **START-HERE.html**. In the all-labs bundle, first open the folder for your lab. Do not open the page inside the ZIP preview.
+3. The kit's `samples` folder contains the files to upload. Keep originals unchanged. Open the JPEG and play the MP4 with sound before class.
 
-**Downloadable browser kits (optional):** once a maintainer publishes a release, the [Releases page](https://github.com/pongpisit/cloudflare-media-labs/releases) will offer `images-lab.zip`, `stream-lab.zip`, `r2-lab.zip` and `all-labs.zip`. Until then, use the written guides. With a kit: download the ZIP, right-click it and choose **Extract All**, then double-click **START-HERE.html** in the extracted folder. The kit tools run locally in your browser, including image-size checks and SHA-256 comparison. Never enter an API key or secret; pasting an actual delivery or player URL is optional, and a URL with a token is sensitive. A Stream player in a locally opened page can fail the allowed-origin check; if so, check playback in the Dashboard player instead.
+| File | Purpose |
+|---|---|
+| `sample-image.jpg` | 1600×1200 orange campus image for Images |
+| `sample-video.mp4` | 20-second blue studio clip for Stream and R2 |
+| `captions-en.vtt` | English captions matching the clip |
+| `sample-document.txt` | Small R2 download example |
 
-**Try it:** open the picture and play the video with sound. The two scenes look different. If the browser adds `(1)` to a filename, that is a duplicate download; choose the file you just saved.
+Individual files are also in [samples](../samples/). No terminal or software installation is needed.
 
-## 3. Copy your personal lab names
+## 3. Copy your resource names
 
-1. At the bottom of your lab kit page, find **Copy your own resource names**.
-2. The page gives you a label, a folder name, an **R2 bucket name** and two image-variant names. Click **Copy** beside the value you need. If copying is blocked, select the field and press **Ctrl+C**.
-3. Paste the values into [your worksheet](beginner-worksheet.md), or a local document. Keep the names for all three labs.
+At the bottom of **START-HERE.html**, find **Copy your own resource names**. Copy the label, folder/bucket name and card/detail variant names into a local note before creating anything.
 
-These are ordinary names, not passwords. Refreshing the page in the same tab keeps your label. Within that tab, a new label appears only if you click **Generate a new label**; a different tab or browser session may show a different label, so copy your names from the worksheet. Use the names already written in your worksheet for existing resources, and do not generate a new label after you have created resources.
+A refresh in the same tab keeps the label. Use **Generate a new label** only before creating resources. A different kit/tab may have a different label; continue using the names already recorded for your resources.
 
-## 4. Follow the labs in this order
+## 4. Follow one lab at a time
 
-| Lab | You will show | Guide | Time |
-|---|---|---|---|
-| Images | Create two variants, then show the picture as a cropped card and full view | [Start Images](beginner-images.md) | 35 minutes |
-| Stream | Your uploaded clip playing with reviewed captions | [Start Stream](beginner-stream.md) | 40 minutes |
-| R2 | Create a private bucket, then verify its actual downloaded copy | [Start R2](beginner-r2.md) | 35 minutes |
+**[Images · 35 min](beginner-images.md) → [Stream · 40 min](beginner-stream.md) → [R2 · 35 min](beginner-r2.md)**
 
-Each guide has **Do this**, **You should see**, **If it does not work**, and **Clean up** sections. Check the result before moving on. An instructor can handle caption or private-access features requiring API permissions; you still watch and record what actually happened.
+Each guide includes the steps, expected result, help and cleanup, with a short results section to copy into your own notes. Record what actually happened; an instructor demonstration or a blocked step is not a learner-completed operation.
 
-## Three classroom rules
+## Safety and help
 
-- Upload only the supplied synthetic samples to the prepared lab account. Products have usage charges; the instructor prepares capacity and cleanup.
-- Write down the IDs/names of your own resources. Delete only those resources when the guide says to clean up.
-- Never paste passwords or API keys into the lab webpage. The tools inspect local files and build links; they do not log into Cloudflare.
-
-**Ready?** Open [Lab 1 — Images](beginner-images.md).
-
-If a term is unfamiliar, use the [product glossary](glossary.md). You do not need to memorize it before starting.
+- Upload only supplied synthetic samples. Products can incur usage charges.
+- Never enter a password, management API token, signing key or R2 secret key in the kit. The browser tools read local files or open your media URL; they do not sign in to Cloudflare.
+- Signed delivery/player/presigned URLs grant temporary access. Do not save them in notes, screenshots or Git; use **Clear connections and selections** afterward.
+- If Stream's allowed-origin policy blocks a local iframe, verify the video in Dashboard instead. Do not turn off the policy.
+- If a browser cannot read a selected file, use a current Edge or Chrome and open the page from the extracted folder. Ask the instructor if still blocked.
+- Delete only your recorded resources. Never empty shared buckets or delete supplied variants/videos.

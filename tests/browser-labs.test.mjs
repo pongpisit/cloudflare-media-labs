@@ -95,7 +95,7 @@ test('markdown guides and generated lab pages agree on the numbers learners must
     assert.ok(images.includes(fact), `guide lacks ${fact}`);
     assert.ok(html.includes(fact), `lab page lacks ${fact}`);
   }
-  for (const file of ['README.md', 'docs/beginner-start.md', 'docs/beginner-images.md', 'docs/beginner-stream.md', 'docs/beginner-r2.md', 'docs/browser-kits.md']) {
+  for (const file of ['README.md', 'docs/beginner-start.md', 'docs/beginner-images.md', 'docs/beginner-stream.md', 'docs/beginner-r2.md']) {
     assert.doesNotMatch(await readFile(path.join(root, file), 'utf8'), /workers\.dev\/labs\.html|Your lab tools|github\.io/, `${file} still points at the retired Worker lab reader`);
   }
 });

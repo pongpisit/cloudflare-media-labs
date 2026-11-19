@@ -21,13 +21,3 @@ jobs:
         with:
           name: browser-lab-kits
           path: downloads/
-  windows-docs:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Windows PowerShell 5.1 syntax and offline lab checks
-        shell: powershell
-        run: ./tests/windows-docs.ps1
-      - name: PowerShell 7 syntax and offline lab checks
-        shell: pwsh
-        run: ./tests/windows-docs.ps1
